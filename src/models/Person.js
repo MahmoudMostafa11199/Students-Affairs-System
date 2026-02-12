@@ -1,16 +1,15 @@
-let parentElement = document.querySelector("table");
-let displayTr = `<tr class="table__row">
-          <td class="table__data">01</td>
-          <td class="table__data">Mahmoud Mostafa</td>
-          <td class="table__data">26</td>
-          <td class="table__data">melshahat799@gmail.com</td>
-          <td class="table__data">CS, React, English</td>
-          <td class="table__data">4</td>
-          <th class="table__data">
-            <div class="table__actions">
-              <button class="btn btn--edit">Edit</button>
-              <button class="btn btn--delete">Delete</button>
-            </div>
-          </td>
-    </tr>`;
-parentElement.insertAdjacentHTML("beforeend", displayTr);
+class Person {
+  _parentElement = document.querySelector('.table__body');
+
+  constructor(_name, _age, _email) {
+    // Abstract
+    if (this.constructor.name == 'Person')
+      throw new Error('Can not take instance from Person');
+
+    this.name = _name;
+    this.age = _age;
+    this.email = _email;
+  }
+}
+
+export default Person;
