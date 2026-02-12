@@ -8,7 +8,92 @@ html {
 }
 
 body {
+  background-color: #e0e1dd;
 }
 
 .container {
+}
+.table-operations {
+  width: 97%;
+  margin-top: 20px;
+}
+.table-operations__filter {
+  float: left;
+  margin-left: 30px;
+  margin-bottom: 20px;
+}
+.table-operations__serach {
+  float: right;
+}
+#per-page {
+  height: 30px;
+  border-radius: 10px;
+}
+.table-operations__filter span,
+.table-operations__serach label {
+  font-family: sans-serif;
+  font-weight: 600;
+  color: #1b263b;
+}
+
+.table-operations__serach input {
+  padding: 4px 2px;
+  border-radius: 5px;
+  border: none;
+  outline-color: #415a77;
+}
+.table__row--head th {
+  color: #1b263b;
+  padding: 5px 0px;
+  background-color: #778da9;
+}
+
+.table__row td {
+  padding: 8px 5px;
+  color: #0d1b2a;
+}
+
+.table__row .table__actions button {
+  border: none;
+  color: white;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.table__row .table__actions .btn--edit {
+  background-color: #219ebc;
+}
+.table__row .table__actions .btn--delete {
+  background-color: #ae2012;
+}
+
+.pagination .pagination__info {
+  float: left;
+  color: #1b263b;
+  margin-left: 20px;
+  padding-top: 10px;
+  font-weight: 600;
+}
+.pagination .pagination__controls {
+  float: right;
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+.pagination .pagination__controls button {
+  border: none;
+  color: white;
+  border-radius: 5px;
+  padding: 5px 10px;
+  background-color: #415a77;
+  margin-top: 10px;
+}
+.btn--add {
+  clear: both;
+  display: block;
+  border: none;
+  padding: 10px;
+  margin-left: 20px;
+  border-radius: 10px;
+  color: white;
+  background-color: #448643;
 }
