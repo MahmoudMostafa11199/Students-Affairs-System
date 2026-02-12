@@ -1,0 +1,135 @@
+{
+  "students": [
+    {
+      "id": "std-8f2b3c1a",
+      "name": "Ahmed Elhendawy",
+      "age": 24,
+      "email": "ahmed.elhendawy@gmail.com",
+      "courses": ["crs-11a22b33", "crs-44c55d66"],
+      "level": 4
+    },
+    {
+      "id": "std-4d9e0f5b",
+      "name": "Mahmoud Mostafa",
+      "age": 26,
+      "email": "melshahat799@gmail.com",
+      "courses": ["crs-7b2a1c8d", "crs-4e9f0a2b", "crs-2a7c81d9"],
+      "level": 4
+    },
+    {
+      "id": "std-2a7c81d9",
+      "name": "Sara Hassan",
+      "age": 20,
+      "email": "sara.h@test.com",
+      "courses": ["crs-1d3c9b7a", "crs-77e88f99"],
+      "level": 1
+    },
+    {
+      "id": "std-b6e5f0a4",
+      "name": "Omar Khaled",
+      "age": 24,
+      "email": "omar.k@domain.com",
+      "courses": ["crs-b6e5f0a4", "crs-00g11h22"],
+      "level": 3
+    },
+    {
+      "id": "std-1c3d9b7a",
+      "name": "Laila Youssef",
+      "age": 21,
+      "email": "laila.y@web.com",
+      "courses": ["crs-33i44j55", "crs-66k77l88", "crs-99m00n11"],
+      "level": 2
+    }
+  ],
+
+  "courses": [
+    {
+      "id": "crs-7b2a1c8d",
+      "title": "Computer Science Introduction",
+      "code": "CS101",
+      "creditHours": 3,
+      "description": "Basics of computing and algorithms."
+    },
+    {
+      "id": "crs-4e9f0a2b",
+      "title": "Advanced React Development",
+      "code": "JS302",
+      "creditHours": 4,
+      "description": "Deep dive into React hooks and state management."
+    },
+    {
+      "id": "crs-1d3c9b7a",
+      "title": "Graphic Design Fundamentals",
+      "code": "GD105",
+      "creditHours": 2,
+      "description": "Principles of visual design and color theory."
+    },
+    {
+      "id": "crs-b6e5f0a4",
+      "title": "Database Systems",
+      "code": "DB201",
+      "creditHours": 3,
+      "description": "SQL, NoSQL, and database architecture."
+    },
+    {
+      "id": "crs-2a7c81d9",
+      "title": "English for Academic Purposes",
+      "code": "ENG11",
+      "creditHours": 2,
+      "description": "Writing and communication skills for students."
+    },
+    {
+      "id": "crs-11a22b33",
+      "title": "Mathematics for CS",
+      "code": "MATH101",
+      "creditHours": 3,
+      "description": "Calculus, linear algebra, and discrete math basics."
+    },
+    {
+      "id": "crs-44c55d66",
+      "title": "General Physics",
+      "code": "PHYS102",
+      "creditHours": 3,
+      "description": "Introduction to mechanics, optics, and electricity."
+    },
+    {
+      "id": "crs-77e88f99",
+      "title": "UI/UX Design",
+      "code": "DSGN201",
+      "creditHours": 2,
+      "description": "User interface design and user experience principles."
+    },
+    {
+      "id": "crs-00g11h22",
+      "title": "Computer Networks",
+      "code": "NET301",
+      "creditHours": 4,
+      "description": "TCP/IP layers, routing, and network security."
+    },
+    {
+      "id": "crs-33i44j55",
+      "title": "Modern JavaScript",
+      "code": "JS201",
+      "creditHours": 3,
+      "description": "ES6+ features, asynchronous programming, and DOM."
+    },
+    {
+      "id": "crs-66k77l88",
+      "title": "HTML5 Fundamentals",
+      "code": "WEB101",
+      "creditHours": 2,
+      "description": "Semantic HTML, forms, and web accessibility."
+    },
+    {
+      "id": "crs-99m00n11",
+      "title": "Advanced CSS3",
+      "code": "CSS102",
+      "creditHours": 2,
+      "description": "Flexbox, Grid, animations, and responsive design."
+    }
+  ],
+
+  "instructors": [],
+
+  "employees": []
+}
