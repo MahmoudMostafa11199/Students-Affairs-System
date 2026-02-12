@@ -1,10 +1,6 @@
 # Students Affairs System
 
-## Project Overview
-
 The Students Affairs System is a lightweight web application designed to manage academic records for Students, Courses, Instructors, and Employees. Built for Student Affairs Staff , the system demonstrates modern JavaScript practices, including Object-Oriented Programming (OOP) and asynchronous data handling.
-
----
 
 ## Key Features
 
@@ -13,8 +9,6 @@ The Students Affairs System is a lightweight web application designed to manage 
 - Server-side Pagination: Efficient data loading using \_page and \_limit parameters via json-server.
 - Live Search: Instant record filtering using keyword queries.
 - Column Sorting: Capability to sort data by specific headers in ascending or descending order.
-
----
 
 ## Folder structure
 
