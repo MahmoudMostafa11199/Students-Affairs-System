@@ -1,12 +1,10 @@
-import * as api from '../api/studentApi.js';
-import * as Student from '../models/Student.js';
+import * as api from "../api/studentApi.js";
+import * as Student from "../models/Student.js";
 
 const controlStudents = async function () {
   try {
     const data = await api.getStudents();
-
-    document.querySelector('.table__body').innerHTML = '';
-
+    document.querySelector(".table__body").innerHTML = "";
     // data.map((std) => {
     //   const studentInstance = new Student(
     //     std.id,
@@ -21,10 +19,11 @@ const controlStudents = async function () {
     // });
 
     Student.render(data);
-
+    Student.sortStudent(data);
+    Student.search(data);
     //
   } catch (err) {
-    console.error('Controller Error 💥:', err);
+    console.error("Controller Error 💥:", err);
   }
 };
 
