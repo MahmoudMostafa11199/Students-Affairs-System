@@ -35,7 +35,7 @@ let students;
 let courses;
 
 //
-formAdd.addEventListener('submit', (e) => {
+formAdd.addEventListener('submit', async (e) => {
   e.preventDefault();
 
   const formInputs = e.target.querySelectorAll('.form-input');
@@ -86,7 +86,7 @@ formAdd.addEventListener('submit', (e) => {
     level: +formInputs[4].value,
   };
 
-  createStudent(newStudent);
+  await createStudent(newStudent);
   closeModal();
 });
 

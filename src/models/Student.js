@@ -1,6 +1,6 @@
-import Person from "./Person.js";
-let table__title = document.querySelectorAll(".table__title");
-let search_input = document.getElementById("search-input");
+import Person from './Person.js';
+let table__title = document.querySelectorAll('.table__title');
+let search_input = document.getElementById('search-input');
 
 export default class Student extends Person {
   constructor(_id, _name, _age, _email, _courses, _level) {
@@ -19,7 +19,7 @@ function generatMarkup(std) {
         <td class="table__data">${std.name}</td>
         <td class="table__data">${std.age}</td>
         <td class="table__data">${std.email}</td>
-        <td class="table__data">${std.courses.join(" , ")}</td>
+        <td class="table__data">${std.courses.join(' , ')}</td>
         <td class="table__data">${std.level}</td>
         <th class="table__data">
           <div class="table__actions">
@@ -30,8 +30,8 @@ function generatMarkup(std) {
       </tr>`;
 
   document
-    .querySelector(".table__body")
-    .insertAdjacentHTML("beforeend", markup);
+    .querySelector('.table__body')
+    .insertAdjacentHTML('beforeend', markup);
 }
 
 export function render(data) {
@@ -41,37 +41,30 @@ export function render(data) {
 }
 
 export function sortStudent(data) {
-  document.addEventListener("click", (e) => {
-    //sort name
-    if (e.target.innerText === "Name") {
+  document.addEventListener('click', (e) => {
+    const sortBy = e.target.dataset.title;
+
+    if (
+      sortBy === 'name' ||
+      sortBy === 'age' ||
+      sortBy === 'email' ||
+      sortBy === 'courses' ||
+      sortBy === 'level'
+    ) {
       data.sort(function (a, b) {
-        if (a.name < b.name) return -1;
-        if (a.name > b.name) return 1;
+        if (a[sortBy] < b[sortBy]) return -1;
+        if (a[sortBy] > b[sortBy]) return 1;
         return 0;
       });
-      // sort age
-    } else if (e.target.innerText === "Age") {
-      data.sort((a, b) => a.age - b.age);
-      // sort email
-    } else if (e.target.innerText === "Email") {
-      data.sort(function (a, b) {
-        if (a.email < b.email) return -1;
-        if (a.email > b.email) return 1;
-        return 0;
-      });
-    } else if (e.target.innerText === "Level/Year") {
-      data.sort((a, b) => a.level - b.level);
     }
 
-    document.querySelector(".table__body").innerHTML = "";
+    document.querySelector('.table__body').innerHTML = '';
     render(data);
   });
 }
 
 export function search(data) {
-  search_input.addEventListener("input", () => {
-    console.log(search_input.value);
-
+  search_input.addEventListener('input', () => {
     let newData = data.filter((el) => {
       return (
         el.name.toLowerCase().includes(search_input.value) ||
@@ -81,7 +74,8 @@ export function search(data) {
         el.level.toString().includes(search_input.value)
       );
     });
-    document.querySelector(".table__body").innerHTML = "";
+
+    document.querySelector('.table__body').innerHTML = '';
     render(newData);
   });
 }
