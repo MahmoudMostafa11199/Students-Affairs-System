@@ -7,7 +7,7 @@
 
     <link rel="stylesheet" href="./src/styles/globalStyle.css" />
 
-    <script src="./src/models/AddStudent.js" defer></script>
+    <script type="module" src="./src/models/AddStudent.js"></script>
     <script type="module" src="./src/controllers/controller.js"></script>
   </head>
 
@@ -56,14 +56,45 @@
       <div class="modal hidden">
         <button class="close-modal">&times;</button>
         <h1 class="modal-title">Add Student</h1>
+
         <form class="modal-form">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
+          <div class="input-box">
+            <label for="std-name">Name:</label>
+            <input type="text" class="form-input" name="name" id="std-name" />
+            <p class="error error-name"></p>
+          </div>
+          <div class="input-box">
+            <label for="std-age">Age:</label>
+            <input type="text" class="form-input" name="age" id="std-age" />
+            <p class="error error-age"></p>
+          </div>
+          <div class="input-box">
+            <label for="std-email">Email:</label>
+            <input type="text" class="form-input" name="email" id="std-email" />
+            <p class="error error-email"></p>
+          </div>
+
+          <div class="input-box">
+            <label for="std-courses">Courses:</label>
+            <select
+              name="courses"
+              id="std-courses"
+              class="std-courses form-input"
+            >
+              <option value="">Select Course</option>
+            </select>
+            <p class="error error-courses"></p>
+          </div>
+          <div class="input-box">
+            <label for="std-level">Level/Year:</label>
+            <input type="text" name="level" class="form-input" id="std-level" />
+            <p class="error error-level"></p>
+          </div>
+
+          <div class="clearfix form-controls">
+            <button class="form-create">Create</button>
+            <button type="button" class="form-cancel">Cancel</button>
+          </div>
         </form>
       </div>
       <div class="overlay hidden"></div>

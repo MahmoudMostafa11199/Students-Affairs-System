@@ -6,6 +6,7 @@
 
 html {
   font-size: 62.5%;
+  font-family: Calibri, sans-serif;
 }
 
 body {
@@ -14,7 +15,15 @@ body {
 }
 
 .container {
+  width: 100%;
+  max-width: 150rem;
+  margin: 0 auto;
 }
+
+button {
+  cursor: pointer;
+}
+
 .table-operations {
   width: 97%;
   margin-top: 20px;
@@ -110,13 +119,17 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 70%;
+  width: 60%;
 
   background-color: white;
-  padding: 6rem;
+  padding: 3rem;
   border-radius: 5px;
   box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
   z-index: 10;
+}
+
+.modal-title {
+  margin-bottom: 4rem;
 }
 
 .overlay {
@@ -140,3 +153,85 @@ body {
   border: none;
   background: none;
 }
+
+.input-box {
+  margin-bottom: 2rem;
+}
+
+.input-box .error {
+  display: inline-block;
+  color: #f11;
+}
+
+.input-box label {
+  display: inline-block;
+  width: 12rem;
+  font-size: 2rem;
+}
+
+.input-box input,
+.input-box select {
+  width: 50%;
+  padding: 6px 12px;
+  border: 1px solid #333;
+  outline: 0;
+  border-radius: 4px;
+  margin-right: 2rem;
+}
+
+.clearfix::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.form-controls {
+  margin-top: 4rem;
+}
+
+.form-cancel,
+.form-create {
+  float: right;
+  font-size: 1.6rem;
+  padding: 8px 14px;
+  margin-right: 1rem;
+  border: 1px solid #777;
+  border-radius: 4px;
+}
+.form-cancel {
+  background-color: #eee;
+}
+.form-create {
+  background-color: #448643;
+  color: #fff;
+}
+.form-cancel:hover {
+  background-color: #ddd9d9;
+}
+.form-create:hover {
+  background-color: #2b9929;
+}
+
+/* .btn-add-course {
+  font-size: 1.8rem;
+  background-color: #219ebc;
+  color: white;
+  border: none;
+  padding: 0rem 0.6rem;
+  border-radius: 50%;
+  
+  transition: all 0.3s;
+}
+
+.btn-add-course:hover {
+  background-color: #126782;
+}
+
+.btn-remove-course {
+  background-color: #ae2012;
+  color: white;
+  border: none;
+  padding: 0rem 0.6rem;
+  border-radius: 5px;
+  font-weight: bold;
+} */
