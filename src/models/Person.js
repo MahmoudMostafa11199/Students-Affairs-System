@@ -1,4 +1,4 @@
-class Person {
+export default class Person {
   _parentElement = document.querySelector('.table__body');
 
   constructor(_name, _age, _email) {
@@ -11,5 +11,3 @@ class Person {
     this.email = _email;
   }
 }
-
-export default Person;

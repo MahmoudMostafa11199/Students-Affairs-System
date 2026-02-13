@@ -1,6 +1,6 @@
 import Person from './Person.js';
 
-class Student extends Person {
+export default class Student extends Person {
   constructor(_id, _name, _age, _email, _courses, _level) {
     super(_name, _age, _email);
 
@@ -8,16 +8,17 @@ class Student extends Person {
     this.courses = _courses;
     this.level = _level;
   }
+}
 
-  _generatMarkup() {
-    return `
+export function generatMarkup(std) {
+  const markup = `
       <tr class="table__row">
         <td class="table__data">--</td>
-        <td class="table__data">${this.name}</td>
-        <td class="table__data">${this.age}</td>
-        <td class="table__data">${this.email}</td>
-        <td class="table__data">${this.courses.join(', ')}</td>
-        <td class="table__data">${this.level}</td>
+        <td class="table__data">${std.name}</td>
+        <td class="table__data">${std.age}</td>
+        <td class="table__data">${std.email}</td>
+        <td class="table__data">${std.courses.join(', ')}</td>
+        <td class="table__data">${std.level}</td>
         <th class="table__data">
           <div class="table__actions">
             <button class="btn btn--edit">Edit</button>
@@ -25,13 +26,14 @@ class Student extends Person {
           </div>
         </td>
       </tr>`;
-  }
 
-  render() {
-    const markup = this._generatMarkup();
-
-    this._parentElement.insertAdjacentHTML('beforeend', markup);
-  }
+  document
+    .querySelector('.table__body')
+    .insertAdjacentHTML('beforeend', markup);
 }
 
-export default Student;
+export function render(data) {
+  data.map((std) => {
+    generatMarkup(std);
+  });
+}
