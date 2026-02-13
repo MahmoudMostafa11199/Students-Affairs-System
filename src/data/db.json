@@ -78,16 +78,6 @@
       "level": 4
     },
     {
-      "id": "std-7174bcfc",
-      "name": "Akram",
-      "age": 26,
-      "email": "akram@gmail.com",
-      "courses": [
-        "crs-00g11h22"
-      ],
-      "level": 4
-    },
-    {
       "id": "std-d514d573",
       "name": "Ahmed Ashraf",
       "age": 24,

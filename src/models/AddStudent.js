@@ -1,27 +1,39 @@
 import { getCourses } from '../api/courseApi.js';
-import { createStudent, getStudents } from '../api/studentApi.js';
+import {
+  createStudent,
+  deleteStudent,
+  getStudents,
+} from '../api/studentApi.js';
 
-const modal = document.querySelector('.modal');
+const modal = document.querySelectorAll('.modal');
+const modalCreate = document.querySelector('.modal-create');
+const modalDelete = document.querySelector('.modal-delete');
 const overlay = document.querySelector('.overlay');
 const showModal = document.querySelector('.btn--add');
-const btnCloseModal = document.querySelector('.close-modal');
-const formCancel = document.querySelector('.form-cancel');
+const btnCloseModal = document.querySelectorAll('.close-modal');
+const formCancel = document.querySelectorAll('.form-cancel');
 const selectCourses = document.querySelector('.std-courses');
 const formAdd = document.querySelector('.modal-form');
 
-const openModal = function () {
-  modal.classList.remove('hidden');
+const openModalCreate = function () {
+  modalCreate.classList.remove('hidden');
+  overlay.classList.remove('hidden');
+};
+const openModalDelete = function () {
+  modalDelete.classList.remove('hidden');
   overlay.classList.remove('hidden');
 };
 
 const closeModal = function () {
-  modal.classList.add('hidden');
+  [...modal].map((md) => md.classList.add('hidden'));
   overlay.classList.add('hidden');
 };
 
-showModal.addEventListener('click', openModal);
-btnCloseModal.addEventListener('click', closeModal);
-formCancel.addEventListener('click', closeModal);
+showModal.addEventListener('click', openModalCreate);
+[...btnCloseModal].map((btn) => {
+  btn.addEventListener('click', closeModal);
+});
+[...formCancel].map((btn) => btn.addEventListener('click', closeModal));
 overlay.addEventListener('click', closeModal);
 
 document.addEventListener('keydown', function (e) {
@@ -103,3 +115,17 @@ const load = async () => {
 };
 
 load();
+
+document.querySelector('.table').addEventListener('click', (e) => {
+  let studentId;
+
+  if (e.target.classList.contains('btn--delete')) {
+    studentId = e.target.closest('.table__row').dataset.id;
+    openModalDelete();
+  }
+
+  document.querySelector('.form-delete').addEventListener('click', (e) => {
+    deleteStudent(studentId);
+    closeModal();
+  });
+});

@@ -1,5 +1,5 @@
 import Person from './Person.js';
-let table__title = document.querySelectorAll('.table__title');
+
 let search_input = document.getElementById('search-input');
 
 export default class Student extends Person {
@@ -14,7 +14,7 @@ export default class Student extends Person {
 
 function generatMarkup(std) {
   const markup = `
-      <tr class="table__row">
+      <tr class="table__row" data-id="${std.id}">
         <td class="table__data">--</td>
         <td class="table__data">${std.name}</td>
         <td class="table__data">${std.age}</td>

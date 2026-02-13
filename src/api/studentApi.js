@@ -49,7 +49,20 @@ export const createStudent = async (data) => {
       body: JSON.stringify(newStudent),
     });
 
-    
+    //
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+
+// Update student
+
+// Delete student
+export const deleteStudent = async (id) => {
+  try {
+    const res = await fetch(`${API_URL}/students/${id}`, {
+      method: 'DELETE',
+    });
 
     //
   } catch (err) {

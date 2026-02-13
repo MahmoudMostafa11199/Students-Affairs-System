@@ -191,6 +191,7 @@ button {
 }
 
 .form-cancel,
+.form-delete,
 .form-create {
   float: right;
   font-size: 1.6rem;
@@ -202,7 +203,8 @@ button {
 .form-cancel {
   background-color: #eee;
 }
-.form-create {
+.form-create,
+.form-delete {
   background-color: #448643;
   color: #fff;
 }
@@ -211,6 +213,11 @@ button {
 }
 .form-create:hover {
   background-color: #2b9929;
+}
+
+.delete-student-message {
+  font-size: 1.9rem;
+  margin-bottom: 2rem;
 }
 
 /* .btn-add-course {
