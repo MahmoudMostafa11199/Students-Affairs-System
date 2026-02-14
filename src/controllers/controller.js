@@ -9,7 +9,8 @@ const controlStudents = async function () {
     Student.render(data);
     Student.sortStudent(data);
     Student.search(data);
-    Student.studentPerPage(data);
+    
+    // Student.studentPerPage(data);
     //
   } catch (err) {
     console.error("Controller Error 💥:", err);

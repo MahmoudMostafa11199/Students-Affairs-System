@@ -85,8 +85,8 @@ export function search(data) {
   });
 }
 
-export const studentPerPage = (data) => {
-  selectPerPage.addEventListener('change', (e) => {
-    render(data, e.target.value);
-  });
-};
+// export const studentPerPage = (data) => {
+//   selectPerPage.addEventListener('change', (e) => {
+//     render(data, e.target.value);
+//   });
+// };
