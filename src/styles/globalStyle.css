@@ -16,7 +16,7 @@ body {
 
 .container {
   width: 100%;
-  max-width: 150rem;
+  max-width: 140rem;
   margin: 0 auto;
 }
 
@@ -79,31 +79,12 @@ button {
   background-color: #ae2012;
 }
 
-.pagination .pagination__info {
-  float: left;
-  color: #1b263b;
-  margin-left: 20px;
-  padding-top: 10px;
-  font-weight: 600;
-}
-.pagination .pagination__controls {
-  float: right;
-  margin-right: 20px;
-  margin-bottom: 10px;
-}
-.pagination .pagination__controls button {
-  border: none;
-  color: white;
-  border-radius: 5px;
-  padding: 5px 10px;
-  background-color: #415a77;
-  margin-top: 10px;
-}
 .btn--add {
   clear: both;
   display: block;
   border: none;
   padding: 10px;
+  margin-top: 20px;
   margin-left: 20px;
   border-radius: 10px;
   color: white;

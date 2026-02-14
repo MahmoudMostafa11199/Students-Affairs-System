@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Students Affairs System | Students</title>
+
+    <link rel="stylesheet" href="../styles/globalStyle.css" />
+
+    <script type="module" src="../models/AddStudent.js"></script>
+    <script type="module" src="../controllers/controller.js"></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="table-operations">
+        <div class="table-operations__filter">
+          <select name="select-input" id="per-page">
+            <option value="10">10</option>
+            <option value="25">25</option>
+          </select>
+          <span>Entities per pages</span>
+        </div>
+
+        <div class="table-operations__serach">
+          <label for="search-input">Search:</label>
+          <input type="text" name="search-input" id="search-input" />
+        </div>
+      </div>
+
+      <table border="1" width="100%" class="table">
+        <tr class="table__row table__row--head">
+          <th class="table__title">#</th>
+          <th data-title="name" class="table__title name-table">Name</th>
+          <th data-title="age" class="table__title">Age</th>
+          <th data-title="email" class="table__title">Email</th>
+          <th data-title="courses" class="table__title">Courses</th>
+          <th data-title="level" class="table__title">Level/Year</th>
+          <th class="table__title">Actions</th>
+        </tr>
+
+        <tbody class="table__body"></tbody>
+      </table>
+
+      <button class="btn btn--add">Add New Student</button>
+
+      <div class="modal modal-create hidden">
+        <button class="close-modal">&times;</button>
+        <h1 class="modal-title">Add Student</h1>
+
+        <form class="modal-form">
+          <div class="input-box">
+            <label for="std-name">Name:</label>
+            <input type="text" class="form-input" name="name" id="std-name" />
+            <p class="error error-name"></p>
+          </div>
+          <div class="input-box">
+            <label for="std-age">Age:</label>
+            <input type="text" class="form-input" name="age" id="std-age" />
+            <p class="error error-age"></p>
+          </div>
+          <div class="input-box">
+            <label for="std-email">Email:</label>
+            <input type="text" class="form-input" name="email" id="std-email" />
+            <p class="error error-email"></p>
+          </div>
+
+          <div class="input-box">
+            <label for="std-courses">Courses:</label>
+            <select
+              name="courses"
+              id="std-courses"
+              class="std-courses form-input"
+            >
+              <option value="">Select Course</option>
+            </select>
+            <p class="error error-courses"></p>
+          </div>
+          <div class="input-box">
+            <label for="std-level">Level/Year:</label>
+            <input type="text" name="level" class="form-input" id="std-level" />
+            <p class="error error-level"></p>
+          </div>
+
+          <div class="clearfix form-controls">
+            <button class="form-create">Create</button>
+            <button type="button" class="form-cancel">Cancel</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal modal-delete hidden">
+        <button class="close-modal">&times;</button>
+        <h1 class="modal-title">Delete Student</h1>
+        <p class="delete-student-message">
+          Are you sure to delete this student ?
+        </p>
+
+        <div class="clearfix form-control">
+          <button class="form-delete">Delete</button>
+          <button class="form-cancel">Cancel</button>
+        </div>
+      </div>
+
+      <div class="overlay hidden"></div>
+
+      <!--  -->
+    </div>
+  </body>
+</html>

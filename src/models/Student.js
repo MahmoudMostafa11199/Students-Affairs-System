@@ -12,10 +12,10 @@ export default class Student extends Person {
   }
 }
 
-function generatMarkup(std) {
+function generatMarkup(std, i) {
   const markup = `
       <tr class="table__row" data-id="${std.id}">
-        <td class="table__data">--</td>
+        <td class="table__data">${i.toString().padStart(2, 0)}</td>
         <td class="table__data">${std.name}</td>
         <td class="table__data">${std.age}</td>
         <td class="table__data">${std.email}</td>
@@ -35,8 +35,8 @@ function generatMarkup(std) {
 }
 
 export function render(data) {
-  data.map((std) => {
-    generatMarkup(std);
+  data.map((std, i) => {
+    generatMarkup(std, i + 1);
   });
 }
 
