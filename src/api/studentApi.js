@@ -1,6 +1,6 @@
 import { API_URL } from '../utils/constant.js';
+import { generateId } from '../utils/helper.js';
 import { getCourses } from './courseApi.js';
-import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
 
 // Fetch student
 export const getStudents = async () => {
@@ -35,7 +35,7 @@ export const getStudents = async () => {
 // Create student
 export const createStudent = async (data) => {
   try {
-    const stdId = `std-${uuidv4().substring(0, 8)}`;
+    const stdId = generateId('std');
 
     const newStudent = {
       id: stdId,
