@@ -6,6 +6,7 @@
     <title>Students Affairs System | Students</title>
 
     <link rel="stylesheet" href="../styles/globalStyle.css" />
+    <link rel="stylesheet" href="../styles/entities.css" />
 
     <script type="module" src="../models/AddStudent.js"></script>
     <script type="module" src="../controllers/controller.js"></script>
@@ -13,6 +14,17 @@
 
   <body>
     <div class="container">
+      <div class="nav-bar">
+        <a href="../../index.html"> <p class="title">Student Affairs</p> </a>
+        <div class="entities">
+          <a href="student.html"> <button>Students</button></a>
+          <a href="course.html"> <button>Courses</button> </a>
+          <a href="employee.html"> <button>Employees</button> </a>
+        </div>
+      </div>
+      <div class="greeting">
+        <h1>Welcome To Student System Page</h1>
+      </div>
       <div class="table-operations">
         <div class="table-operations__filter">
           <select name="select-input" id="per-page">
