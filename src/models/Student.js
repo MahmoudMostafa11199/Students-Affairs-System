@@ -1,6 +1,9 @@
 import Person from './Person.js';
 
-let search_input = document.getElementById('search-input');
+const search_input = document.getElementById('search-input');
+const selectPerPage = document.querySelector(
+  '.table-operations__filter #per-page',
+);
 
 export default class Student extends Person {
   constructor(_id, _name, _age, _email, _courses, _level) {
@@ -12,6 +15,8 @@ export default class Student extends Person {
   }
 }
 
+const markupCourse = (course) => `<span class="course">${course}</span>`;
+
 function generatMarkup(std, i) {
   const markup = `
       <tr class="table__row" data-id="${std.id}">
@@ -19,7 +24,7 @@ function generatMarkup(std, i) {
         <td class="table__data">${std.name}</td>
         <td class="table__data">${std.age}</td>
         <td class="table__data">${std.email}</td>
-        <td class="table__data">${std.courses.join(' , ')}</td>
+        <td class="table__data">${std.courses.map(markupCourse).join('')}</td>
         <td class="table__data">${std.level}</td>
         <th class="table__data">
           <div class="table__actions">
@@ -34,8 +39,8 @@ function generatMarkup(std, i) {
     .insertAdjacentHTML('beforeend', markup);
 }
 
-export function render(data) {
-  data.map((std, i) => {
+export function render(data, perPage = 10) {
+  data.slice(0, perPage).map((std, i) => {
     generatMarkup(std, i + 1);
   });
 }
@@ -79,3 +84,9 @@ export function search(data) {
     render(newData);
   });
 }
+
+export const studentPerPage = (data) => {
+  selectPerPage.addEventListener('change', (e) => {
+    render(data, e.target.value);
+  });
+};

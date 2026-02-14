@@ -40,7 +40,7 @@ export const createStudent = async (data) => {
     const newStudent = {
       id: stdId,
       ...data,
-      courses: [data.courses],
+      courses: data.courses,
     };
 
     const res = await fetch(`${API_URL}/students`, {
@@ -51,11 +51,26 @@ export const createStudent = async (data) => {
 
     //
   } catch (err) {
-    console.log(err.message);
+    console.error(err.message);
   }
 };
 
 // Update student
+export const updateStudent = async (id, updatedData) => {
+  try {
+    const res = await fetch(`${API_URL}/students/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updatedData),
+    });
+
+    return await res.json();
+
+    //
+  } catch (err) {
+    console.error(err.message);
+  }
+};
 
 // Delete student
 export const deleteStudent = async (id) => {
@@ -66,6 +81,6 @@ export const deleteStudent = async (id) => {
 
     //
   } catch (err) {
-    console.log(err.message);
+    console.error(err.message);
   }
 };
