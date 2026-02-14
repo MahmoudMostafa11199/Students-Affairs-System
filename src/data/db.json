@@ -76,16 +76,6 @@
         "crs-66k77l88"
       ],
       "level": 4
-    },
-    {
-      "id": "std-d514d573",
-      "name": "Ahmed Ashraf",
-      "age": 24,
-      "email": "ahmedashraf@gmail.com",
-      "courses": [
-        "crs-44c55d66"
-      ],
-      "level": 5
     }
   ],
   "courses": [
