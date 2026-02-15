@@ -14,6 +14,7 @@ body {
 .container {
   width: 100%;
   max-width: 140rem;
+  min-height: calc(81vh - (37px - 40px));
   margin: 0 auto;
 }
 button {
@@ -82,11 +83,9 @@ button {
     rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
 }
 .footer {
-  margin-top: 110px;
+  /* margin-top: 110px; */
   background-color: #fca311;
-  height: 53px;
-  padding-left: 15px;
-  padding-top: 20px;
+  padding: 10px 15px;
   color: #003566;
   font-weight: 600;
   border-top-right-radius: 25px;
