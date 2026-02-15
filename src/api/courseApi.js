@@ -1,6 +1,6 @@
-import { API_URL } from '../utils/constant.js';
-import { generateId } from '../utils/helper.js';
-import { getInstructors } from './employeeApi.js';
+import { API_URL } from "../utils/constant.js";
+import { generateId } from "../utils/helper.js";
+import { getInstructors } from "./employeeApi.js";
 
 // Fetch Courses
 export const getCourses = async () => {
@@ -8,7 +8,7 @@ export const getCourses = async () => {
     const courseRes = await fetch(`${API_URL}/courses`);
 
     if (!courseRes.ok)
-      throw new Error('Failed to fetch courses data. Please try again later.');
+      throw new Error("Failed to fetch courses data. Please try again later.");
 
     const coursesData = await courseRes.json();
 
@@ -19,13 +19,13 @@ export const getCourses = async () => {
   }
 };
 
-// Fetch Course bby id
+// Fetch Course by id
 export const getCourse = async (id) => {
   try {
     const courseRes = await fetch(`${API_URL}/courses/${id}`);
 
     if (!courseRes.ok)
-      throw new Error('Failed to fetch course data. Please try again later.');
+      throw new Error("Failed to fetch course data. Please try again later.");
 
     const course = await courseRes.json();
 
@@ -50,7 +50,7 @@ export const getCoursesWithInstructor = async () => {
 
       return {
         ...crs,
-        instructorName: instructor ? instructor.name : 'Waiting for Instructor',
+        instructorName: instructor ? instructor.name : "Waiting for Instructor",
       };
     });
 
@@ -65,7 +65,7 @@ export const getCoursesWithInstructor = async () => {
 // Create Course
 export const createCourse = async (data) => {
   try {
-    const courseId = generateId('crs');
+    const courseId = generateId("crs");
 
     const newCourse = {
       id: courseId,
@@ -76,8 +76,8 @@ export const createCourse = async (data) => {
     };
 
     const res = await fetch(`${API_URL}/courses`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newCourse),
     });
 
@@ -93,8 +93,8 @@ export const createCourse = async (data) => {
 export const updateCourse = async (id, updatedCourse) => {
   try {
     const res = await fetch(`${API_URL}/courses/${id}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedCourse),
     });
 
@@ -109,7 +109,7 @@ export const updateCourse = async (id, updatedCourse) => {
 // Delete course
 export const deleteCourse = async (id) => {
   try {
-    const res = await fetch(`${API_URL}/courses/${id}`, { method: 'DELETE' });
+    const res = await fetch(`${API_URL}/courses/${id}`, { method: "DELETE" });
 
     if (res.ok) await deleteEmployeeByCourseId(id);
 

@@ -1,18 +1,20 @@
-// import * as api from "../api/couseApi.js";
+import * as api from "../api/courseApi.js";
 import * as Course from "../models/Course.js";
 
-// const controlCourses = async function () {
-//   try {
-// const data = await api.getCourses();
-document.querySelector(".table__body").innerHTML = "";
-Course.render();
-Course.sortCourse();
-Course.search();
+const controlCourses = async function () {
+  try {
 
-//
-//   } catch (err) {
-// console.error("Controller Error 💥:", err);
-//   }
-// };
+    const data = await api.getCoursesWithInstructor();
 
-// controlCourses();
+    document.querySelector(".table__body").innerHTML = "";
+    Course.render(data);
+    Course.sortCourse(data);
+    Course.search(data);
+
+    //
+  } catch (err) {
+    console.error("Controller Error 💥:", err);
+  }
+};
+
+controlCourses();
