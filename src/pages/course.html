@@ -3,11 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Student Affairs System | Courses</title>
+
     <link rel="stylesheet" href="../styles/globalStyle.css" />
     <link rel="stylesheet" href="../styles/entities.css" />
+
     <script type="module" src="../controllers/courseController.js"></script>
+    <script type="module" src="../models/courseForm.js"></script>
   </head>
+
   <body>
     <div class="container">
       <div class="nav-bar">
@@ -18,7 +22,7 @@
           <a href="employee.html"> <button>Employees</button> </a>
         </div>
       </div>
-      
+
       <div class="greeting">
         <h1>Welcome To Course System Page</h1>
       </div>
@@ -42,9 +46,9 @@
           <th class="table__title">#</th>
           <th data-title="title" class="table__title name-table">Title</th>
           <th data-title="code" class="table__title">Code</th>
-          <th data-title="credit" class="table__title">Credit Hours</th>
+          <th data-title="creditHours" class="table__title">Credit Hours</th>
           <th data-title="description" class="table__title">Description</th>
-          <th data-title="instructor" class="table__title">Instructor</th>
+          <th data-title="instructorName" class="table__title">Instructor</th>
           <th class="table__title">Actions</th>
         </tr>
 
@@ -53,39 +57,53 @@
 
       <button class="btn btn--add">Add New Course</button>
 
-      <!-- <div class="modal modal-student-form hidden">
+      <div class="modal modal-course-form hidden">
         <button class="close-modal">&times;</button>
         <h1 class="modal-title">Add Course</h1>
 
         <form class="modal-form">
           <div class="input-box">
-            <label for="std-name">Title:</label>
-            <input type="text" class="form-input" name="name" id="std-name" />
-            <p class="error error-name"></p>
+            <label for="course-title">Title:</label>
+            <input
+              type="text"
+              class="form-input"
+              name="title"
+              id="course-title"
+            />
+            <p class="error error-title"></p>
           </div>
           <div class="input-box">
-            <label for="std-age">Code:</label>
-            <input type="text" class="form-input" name="age" id="std-age" />
-            <p class="error error-age"></p>
+            <label for="course-code">Code:</label>
+            <input
+              type="text"
+              class="form-input"
+              name="code"
+              id="course-code"
+            />
+            <p class="error error-code"></p>
           </div>
           <div class="input-box">
-            <label for="std-email">Credit Hours:</label>
-            <input type="text" class="form-input" name="email" id="std-email" />
-            <p class="error error-email"></p>
+            <label for="course-creditHours">Credit Hours:</label>
+            <input
+              type="text"
+              class="form-input"
+              name="creditHours"
+              id="course-creditHours"
+            />
+            <p class="error error-creditHours"></p>
           </div>
 
           <div class="input-box">
-            <label for="std-courses">Description:</label>
-            <select
-              name="courses"
-              id="std-courses"
-              class="std-courses form-input"
-            >
-              <option value="">Select Course</option>
-            </select>
-            <p class="error error-courses"></p>
+            <label for="course-description">Description:</label>
+            <textarea
+              name="description"
+              class="form-input"
+              name="course-description"
+              id="course-description"
+            ></textarea>
+            <p class="error error-description"></p>
           </div>
-  
+
           <div class="clearfix form-controls">
             <button class="form-create">Create</button>
             <button type="button" class="form-cancel">Cancel</button>
@@ -96,9 +114,7 @@
       <div class="modal modal-delete hidden">
         <button class="close-modal">&times;</button>
         <h1 class="modal-title">Delete Course</h1>
-        <p class="delete-student-message">
-          Are you sure to delete this Course ?
-        </p>
+        <p class="delete-message">Are you sure to delete this Course ?</p>
 
         <div class="clearfix form-control">
           <button class="form-delete">Delete</button>
@@ -106,7 +122,7 @@
         </div>
       </div>
 
-      <div class="overlay hidden"></div> -->
+      <div class="overlay hidden"></div>
     </div>
   </body>
 </html>
