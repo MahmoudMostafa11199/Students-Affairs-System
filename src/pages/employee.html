@@ -3,11 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Student Affairs System | Employees</title>
+
     <link rel="stylesheet" href="../styles/globalStyle.css" />
     <link rel="stylesheet" href="../styles/entities.css" />
+
     <script type="module" src="../controllers/employeeController.js"></script>
+    <script type="module" src="../models/employeeForm.js"></script>
   </head>
+
   <body>
     <div class="container">
       <div class="nav-bar">
@@ -52,45 +56,54 @@
 
       <button class="btn btn--add">Add New Employees</button>
 
-      <!-- <div class="modal modal-student-form hidden">
+      <div class="modal modal-employee-form hidden">
         <button class="close-modal">&times;</button>
         <h1 class="modal-title">Add Employee</h1>
 
         <form class="modal-form">
           <div class="input-box">
-            <label for="std-name">Name:</label>
-            <input type="text" class="form-input" name="name" id="std-name" />
+            <label for="emp-name">Name:</label>
+            <input type="text" class="form-input" name="name" id="emp-name" />
             <p class="error error-name"></p>
           </div>
           <div class="input-box">
-            <label for="std-age">Email:</label>
-            <input type="text" class="form-input" name="age" id="std-age" />
-            <p class="error error-age"></p>
+            <label for="emp-email">Email:</label>
+            <input type="text" class="form-input" name="email" id="emp-email" />
+            <p class="error error-email"></p>
           </div>
           <div class="input-box">
-            <label for="std-email">Role:</label>
-            <input type="text" class="form-input" name="email" id="std-email" />
-            <p class="error error-email"></p>
+            <label for="emp-role">Role:</label>
+            <select name="role" id="emp-role" class="form-input">
+              <option value="">Select Role</option>
+              <option value="employee">Employee</option>
+              <option value="instructor">Instructor</option>
+            </select>
+            <p class="error error-role"></p>
           </div>
 
           <div class="input-box">
-            <label for="std-courses">Course:</label>
+            <label for="emp-course">Course:</label>
             <select
-              name="courses"
-              id="std-courses"
-              class="std-courses form-input"
+              name="course"
+              id="emp-course"
+              class="emp-courses form-input"
             >
               <option value="">Select Course</option>
             </select>
-            <p class="error error-courses"></p>
+            <p class="error error-course"></p>
           </div>
 
           <div class="input-box">
-            <label for="std-level">Experience:</label>
-            <input type="text" name="level" class="form-input" id="std-level" />
-            <p class="error error-level"></p>
+            <label for="emp-experience">Experience:</label>
+            <input
+              type="text"
+              name="experience"
+              class="form-input"
+              id="emp-experience"
+            />
+            <p class="error error-experience"></p>
           </div>
-  
+
           <div class="clearfix form-controls">
             <button class="form-create">Create</button>
             <button type="button" class="form-cancel">Cancel</button>
@@ -101,9 +114,7 @@
       <div class="modal modal-delete hidden">
         <button class="close-modal">&times;</button>
         <h1 class="modal-title">Delete Employee</h1>
-        <p class="delete-student-message">
-          Are you sure to delete this Employee ?
-        </p>
+        <p class="delete-message">Are you sure to delete this Employee ?</p>
 
         <div class="clearfix form-control">
           <button class="form-delete">Delete</button>
@@ -111,7 +122,7 @@
         </div>
       </div>
 
-      <div class="overlay hidden"></div> -->
+      <div class="overlay hidden"></div>
     </div>
   </body>
 </html>
