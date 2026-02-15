@@ -1,14 +1,22 @@
+import Person from "./Person.js";
 const search_input = document.getElementById("search-input");
 
-function generatMarkup() {
+class Employee extends Person {
+  constructor(_name, _age, _email, _role, _experience) {
+    super(_name, _age, _email);
+    this.role = _role;
+    this.experience = _experience;
+  }
+}
+function generatMarkup(emp, i) {
   const markup = `
-      <tr class="table__row" data-id="1">
-        <td class="table__data">1</td>
-        <td class="table__data">Mahmoud</td>
-        <td class="table__data">mahmoud@gmail.com</td>
-        <td class="table__data">Instructor</td>
-        <td class="table__data">JS</td>
-        <td class="table__data">4 years</td>
+      <tr class="table__row" data-id="${emp.id}">
+        <td class="table__data">${i.toString().padStart(2, 0)}</td>
+        <td class="table__data">${emp.name}</td>
+        <td class="table__data">${emp.email}</td>
+        <td class="table__data">${emp.role}</td>
+        <td class="table__data">${emp.courseName}</td>
+        <td class="table__data">${emp.experience}</td>
         <th class="table__data">
           <div class="table__actions">
             <button class="btn btn--edit">Edit</button>
@@ -22,19 +30,20 @@ function generatMarkup() {
     .insertAdjacentHTML("beforeend", markup);
 }
 
-export function render() {
-  generatMarkup();
+export function render(data) {
+  data.map((emp, i) => {
+    generatMarkup(emp, i + 1);
+  });
 }
 
 export function sortCourse(data) {
   document.addEventListener("click", (e) => {
     const sortBy = e.target.dataset.title;
-
     if (
       sortBy === "name" ||
       sortBy === "email" ||
       sortBy === "role" ||
-      sortBy === "course" ||
+      sortBy === "courseName" ||
       sortBy === "experience"
     ) {
       data.sort(function (a, b) {
@@ -55,7 +64,7 @@ export function search(data) {
         el.name.toLowerCase().includes(search_input.value) ||
         el.email.toString().includes(search_input.value) ||
         el.role.toString().toLowerCase().includes(search_input.value) ||
-        el.course.toLowerCase().includes(search_input.value) ||
+        el.courseName.toLowerCase().includes(search_input.value) ||
         el.experience.toString().includes(search_input.value)
       );
     });

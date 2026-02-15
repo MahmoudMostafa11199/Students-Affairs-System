@@ -41,13 +41,12 @@ export function render(data) {
 export function sortCourse(data) {
   document.addEventListener("click", (e) => {
     const sortBy = e.target.dataset.title;
-    console.log(e.target.dataset.title);
     if (
       sortBy === "title" ||
       sortBy === "code" ||
       sortBy === "creditHours" ||
       sortBy === "description" ||
-      sortBy === "instructorName" 
+      sortBy === "instructorName"
     ) {
       data.sort(function (a, b) {
         if (a[sortBy] < b[sortBy]) return -1;
