@@ -105,10 +105,10 @@ formAdd.addEventListener('submit', async (e) => {
   }
 
   const courseData = {
-    tilte: formInputs[0].value,
+    title: formInputs[0].value,
     code: formInputs[1].value,
     creditHours: +formInputs[2].value,
-    description: [formInputs[3].value],
+    description: formInputs[3].value,
   };
 
   if (editingId) {
