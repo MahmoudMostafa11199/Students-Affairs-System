@@ -1,5 +1,10 @@
-import { createCourse, getCourses, updateCourse } from '../api/courseApi.js';
-import { deleteEmployee } from '../api/employeeApi.js';
+import { getCoursesWithoutInstructors } from '../api/courseApi.js';
+import {
+  createEmployee,
+  deleteEmployee,
+  getEmployees,
+  updateEmployee,
+} from '../api/employeeApi.js';
 
 // Elements
 const modal = document.querySelectorAll('.modal');
@@ -17,6 +22,7 @@ const btnConfirmDelete = document.querySelector('.form-delete');
 // State
 let editingId = null;
 let deletingId = null;
+let employees;
 let courses;
 
 //-----------------------
@@ -81,32 +87,30 @@ formAdd.addEventListener('submit', async (e) => {
 
   if (hasErrro) return;
 
-  // Employee Duplication Check by (email)
-  const existingEmployee = employees.some((crs) => {
-    return (
-      crs.code == formInputs[1].value.toUpperCase().trim() &&
-      editingId !== std.id
-    );
+  // Email Duplication Check by (email)
+  const existingEmail = employees.some((emp) => {
+    return emp.email == formInputs[1].value.trim() && editingId !== emp.id;
   });
 
-  if (existingCourse) {
-    document.querySelector('.error-code').textContent = 'Course already exists';
+  if (existingEmail) {
+    document.querySelector('.error-email').textContent = 'Email already exists';
     return;
   }
 
-  const courseData = {
-    tilte: formInputs[0].value,
-    code: formInputs[1].value,
-    creditHours: +formInputs[2].value,
-    description: [formInputs[3].value],
+  const employeeData = {
+    name: formInputs[0].value,
+    email: formInputs[1].value,
+    role: formInputs[2].value,
+    courseId: formInputs[3].value,
+    experience: formInputs[4].value,
   };
 
   if (editingId) {
-    await updateCourse(editingId, courseData);
+    await updateEmployee(editingId, employeeData);
 
     //
   } else {
-    await createCourse(courseData);
+    await createEmployee(employeeData);
   }
   closeModal();
 });
@@ -126,17 +130,18 @@ document.querySelector('.table').addEventListener('click', (e) => {
   // Edit button
   if (e.target.classList.contains('btn--edit')) {
     editingId = courseId;
-    const course = courses.find((crs) => crs.id == editingId);
+    const employee = employees.find((emp) => emp.id == editingId);
 
-    document.querySelector('.modal-course-form .modal-title').textContent =
+    document.querySelector('.modal-employee-form .modal-title').textContent =
       'Edit Course';
     document.querySelector('.form-create').textContent = 'Save Changes';
 
     const formInputs = formAdd.querySelectorAll('.form-input');
-    formInputs[0].value = course.title;
-    formInputs[1].value = course.code;
-    formInputs[2].value = course.creditHours;
-    formInputs[3].value = course.description;
+    formInputs[0].value = employee.name;
+    formInputs[1].value = employee.email;
+    formInputs[2].value = employee.role;
+    formInputs[3].value = employee.courseId;
+    formInputs[4].value = employee.experience;
 
     openModalForm();
   }
@@ -144,7 +149,14 @@ document.querySelector('.table').addEventListener('click', (e) => {
 
 // Load init courses
 const load = async () => {
-  courses = await getCourses();
+  courses = await getCoursesWithoutInstructors();
+  employees = await getEmployees();
+
+  courses.map((crs) => {
+    const opt = `<option value="${crs.id}">${crs.title}</option>`;
+
+    selectCourses.insertAdjacentHTML('beforeend', opt);
+  });
 };
 
 load();
