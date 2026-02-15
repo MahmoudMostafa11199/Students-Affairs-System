@@ -5,10 +5,7 @@
       "name": "Ahmed Elhendawy",
       "age": 24,
       "email": "ahmed.elhendawy@gmail.com",
-      "courses": [
-        "crs-11a22b33",
-        "crs-44c55d66"
-      ],
+      "courses": ["crs-11a22b33", "crs-44c55d66"],
       "level": 4
     },
     {
@@ -16,11 +13,7 @@
       "name": "Mahmoud Mostafa",
       "age": 26,
       "email": "melshahat799@gmail.com",
-      "courses": [
-        "crs-7b2a1c8d",
-        "crs-4e9f0a2b",
-        "crs-2a7c81d9"
-      ],
+      "courses": ["crs-7b2a1c8d", "crs-4e9f0a2b", "crs-2a7c81d9"],
       "level": 4
     },
     {
@@ -28,10 +21,7 @@
       "name": "Sara Hassan",
       "age": 20,
       "email": "sara.h@test.com",
-      "courses": [
-        "crs-1d3c9b7a",
-        "crs-77e88f99"
-      ],
+      "courses": ["crs-1d3c9b7a", "crs-77e88f99"],
       "level": 1
     },
     {
@@ -39,10 +29,7 @@
       "name": "Omar Khaled",
       "age": 24,
       "email": "omar.k@domain.com",
-      "courses": [
-        "crs-b6e5f0a4",
-        "crs-00g11h22"
-      ],
+      "courses": ["crs-b6e5f0a4", "crs-00g11h22"],
       "level": 3
     },
     {
@@ -50,9 +37,7 @@
       "name": "Fares Mostafa",
       "age": 7,
       "email": "fareselshahat@gmail.com",
-      "courses": [
-        "crs-2a7c81d9"
-      ],
+      "courses": ["crs-2a7c81d9"],
       "level": 1
     },
     {
@@ -60,9 +45,7 @@
       "name": "Hesham Ashraf",
       "age": 25,
       "email": "hesham_ashraf@gmail.com",
-      "courses": [
-        "crs-66k77l88"
-      ],
+      "courses": ["crs-66k77l88"],
       "level": 4
     },
     {
@@ -70,9 +53,7 @@
       "name": "Ahmed Ashraf",
       "age": 25,
       "email": "ahmed_ashraf@gmail.com",
-      "courses": [
-        "crs-44c55d66"
-      ],
+      "courses": ["crs-44c55d66"],
       "level": 4
     },
     {
@@ -80,9 +61,7 @@
       "name": "Akram",
       "age": 25,
       "email": "akram@gmail.com",
-      "courses": [
-        "crs-00g11h22"
-      ],
+      "courses": ["crs-00g11h22"],
       "level": 5
     },
     {
@@ -90,9 +69,7 @@
       "name": "Abdallah ",
       "age": 24,
       "email": "abdallah@gmail.com",
-      "courses": [
-        "crs-4e9f0a2b"
-      ],
+      "courses": ["crs-4e9f0a2b"],
       "level": 6
     },
     {
@@ -100,9 +77,7 @@
       "name": "Osama Ibrahim",
       "age": 24,
       "email": "osama@gmail.com",
-      "courses": [
-        "crs-b6e5f0a4"
-      ],
+      "courses": ["crs-b6e5f0a4"],
       "level": 3
     }
   ],
@@ -190,6 +165,13 @@
       "code": "CSS102",
       "creditHours": 2,
       "description": "Flexbox, Grid, animations, and responsive design."
+    },
+    {
+      "id": "crs-477ac111",
+      "title": "Network Security & Ethical Hacking",
+      "code": "SEC404",
+      "creditHours": 4,
+      "description": "An intensive guide to protecting networks, performing penetration testing, and understanding modern cryptographic protocols."
     }
   ],
   "employees": [
@@ -288,6 +270,14 @@
       "role": "instructor",
       "courseId": "crs-99m00n11",
       "experience": "4 Years"
+    },
+    {
+      "id": "ins-a49bf980",
+      "name": "Ahmed Elsafty",
+      "email": "ahmed97@vois.com",
+      "role": "instructor",
+      "courseId": "crs-477ac111",
+      "experience": "5 Years"
     }
   ]
 }

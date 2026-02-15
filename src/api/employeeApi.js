@@ -1,6 +1,6 @@
 import { API_URL } from '../utils/constant.js';
 import { generateId } from '../utils/helper.js';
-import { getCourse } from './courseApi.js';
+import { getCourses } from './courseApi.js';
 
 // Fetch Employees
 export const getEmployees = async () => {
@@ -14,7 +14,15 @@ export const getEmployees = async () => {
 
     const employeesData = await employeeRes.json();
 
-    return employeesData;
+    const courses = await getCourses();
+
+    const employees = employeesData.map((emp) => {
+      const course = courses.find((crs) => crs.id === emp.courseId);
+
+      return { ...emp, courseName: course.title };
+    });
+
+    return employees;
 
     //
   } catch (err) {
@@ -32,6 +40,47 @@ export const getInstructors = async () => {
     );
 
     return instructors;
+    //
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
+// Create Course
+export const createEmployee = async (data) => {
+  try {
+    const employeeId = generateId(data.role == 'employee' ? 'emp' : 'ins');
+
+    const newEmployee = {
+      id: employeeId,
+      ...data,
+    };
+
+    const res = await fetch(`${API_URL}/employees`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newEmployee),
+    });
+
+    return await res.json();
+
+    //
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
+// Update course
+export const updateEmployee = async (id, updatedEmployee) => {
+  try {
+    const res = await fetch(`${API_URL}/employees/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updatedEmployee),
+    });
+
+    return await res.json();
+
     //
   } catch (err) {
     console.error(err.message);
