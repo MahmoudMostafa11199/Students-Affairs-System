@@ -37,6 +37,7 @@
 
 .table__row--head .table__title {
   font-size: 1.4rem;
+  font-weight: 600;
   background-color: #415a77;
   color: #e0e1dd;
   text-transform: uppercase;
@@ -49,12 +50,10 @@
   background-color: #375271;
 }
 
-.table__row--head .table__title span {
-  vertical-align: top;
-}
 .table__row--head .table__title img {
   width: 1.5rem;
-  height: 1.5rem;
+  height: 1.6rem;
+  vertical-align: middle;
 }
 
 .table__row .table__data {

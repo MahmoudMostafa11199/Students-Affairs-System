@@ -9,7 +9,7 @@ html {
 }
 
 body {
-  font-family: monospace, sans-serif;
+  font-family: 'Space Mono', monospace;
   font-size: 1.6rem;
   background-color: #e5e5e5;
   position: relative;
@@ -19,7 +19,7 @@ body {
 .container {
   width: 100%;
   max-width: 140rem;
-  min-height: calc(80vh - (36px - 40px));
+  min-height: calc(100vh - 156px);
   margin: 0 auto;
 }
 
@@ -48,8 +48,9 @@ button {
 }
 .nav-bar .title {
   font-size: 25px;
-  float: left;
+  font-weight: 600;
   color: #fca311;
+  float: left;
 }
 .entities {
   float: right;
@@ -79,7 +80,6 @@ button {
 
 .landing h1 {
   margin-top: 50px;
-  letter-spacing: 1px;
   color: #003566;
   margin-bottom: 20px;
 }
@@ -137,6 +137,9 @@ button {
 
 .pagination__info {
   float: left;
+}
+.pagination__info span {
+  font-weight: 600;
 }
 
 .pagination__pages {
