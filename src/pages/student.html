@@ -29,27 +29,43 @@
       <div class="table-operations clearfix">
         <div class="table-operations__filter">
           <select name="select-input" id="per-page">
-            <option value="10">10</option>
-            <option value="25">25</option>
+            <option value="10">10 per page</option>
+            <option value="25">25 per page</option>
+            <option value="30">30 per page</option>
             <option value="all">All</option>
           </select>
-          <span>Entities per pages</span>
         </div>
 
         <div class="table-operations__serach">
-          <label for="search-input">Search:</label>
-          <input type="text" name="search-input" id="search-input" />
+          <input
+            type="text"
+            name="search-input"
+            id="search-input"
+            placeholder="Search..."
+          />
         </div>
       </div>
 
       <table width="100%" class="table">
         <tr class="table__row table__row--head">
           <th class="table__title" width="10">#</th>
-          <th data-title="name" class="table__title" width="200">Name</th>
-          <th data-title="age" class="table__title" width="40">Age</th>
-          <th data-title="email" class="table__title" width="200">Email</th>
-          <th data-title="courses" class="table__title" width="400">Courses</th>
-          <th data-title="level" class="table__title" width="40">Level/Year</th>
+          <th data-title="name" class="table__title" width="150">
+            <span>Name</span>
+            <img src="../imgs/sort.svg" alt="sort-icon" />
+          </th>
+          <th data-title="age" class="table__title" width="70">
+            <span>Age</span>
+            <img src="../imgs/sort.svg" alt="sort-icon" />
+          </th>
+          <th data-title="email" class="table__title" width="130">
+            <span>Email</span>
+            <img src="../imgs/sort.svg" alt="sort-icon" />
+          </th>
+          <th data-title="courses" class="table__title" width="300">Courses</th>
+          <th data-title="level" class="table__title" width="80">
+            <span>Level/Year</span>
+            <img src="../imgs/sort.svg" alt="sort-icon" />
+          </th>
           <th class="table__title" width="200">Actions</th>
         </tr>
 
@@ -59,11 +75,11 @@
       <div class="pagination clearfix">
         <p class="pagination__info">
           Showing
-          <span class="pagination__from">21</span>
+          <span class="pagination__from">1</span>
           to
-          <span class="pagination__to">30</span>
+          <span class="pagination__to">10</span>
           of
-          <span class="pagination__total">57</span>
+          <span class="pagination__total">25</span>
           entries
         </p>
 

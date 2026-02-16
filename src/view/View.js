@@ -51,7 +51,7 @@ export default class View {
     document
       .querySelector('.table__row--head')
       .addEventListener('click', async (e) => {
-        const sortBy = e.target.dataset.title;
+        const sortBy = e.target.closest('th').dataset.title;
 
         if (this.columnsSort.includes(sortBy)) {
           this.isAsc = !this.isAsc;

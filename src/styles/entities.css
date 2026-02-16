@@ -22,21 +22,17 @@
   float: right;
 }
 
-#per-page {
+.table-operations input,
+.table-operations select {
+  width: 30rem;
   padding: 6px 16px;
-  border-radius: 6px;
-  font-weight: 600;
-}
-.table-operations__filter span,
-.table-operations__serach label {
-  color: #1b263b;
-}
-
-.table-operations__serach input {
-  padding: 6px 8px;
   border-radius: 5px;
   border: 1px solid #aaa;
   outline-color: 1px solid #415a77;
+}
+
+.table-operations input {
+  font-size: 1.4rem;
 }
 
 .table__row--head .table__title {
@@ -47,7 +43,20 @@
   border: 1px solid #ddd;
   letter-spacing: 1px;
   padding: 1.5rem;
+  cursor: pointer;
 }
+.table__row--head .table__title:hover {
+  background-color: #375271;
+}
+
+.table__row--head .table__title span {
+  vertical-align: top;
+}
+.table__row--head .table__title img {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
 .table__row .table__data {
   font-size: 1.5rem;
   padding: 1rem 1.5rem;
