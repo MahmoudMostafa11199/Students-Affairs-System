@@ -1,10 +1,11 @@
-import { getCoursesWithoutInstructors } from '../api/courseApi.js';
+import { getCoursesWithoutInstructors, getCourse } from '../api/courseApi.js';
 import {
   createEmployee,
   deleteEmployee,
   getEmployees,
   updateEmployee,
 } from '../api/employeeApi.js';
+import { isEmailAddress } from '../utils/helper.js';
 
 // Elements
 const modal = document.querySelectorAll('.modal');
@@ -15,6 +16,7 @@ const showModal = document.querySelector('.btn--add');
 const btnCloseModal = document.querySelectorAll('.close-modal');
 const selectCourses = document.querySelector('.emp-courses');
 const formCancel = document.querySelectorAll('.form-cancel');
+const deleteMessage = document.querySelector('.delete-message');
 const formAdd = document.querySelector('.modal-form');
 const btnConfirmDelete = document.querySelector('.form-delete');
 
@@ -28,16 +30,17 @@ let courses;
 //-----------------------
 // Functions
 // Open and Close modal
-const openModalForm = function () {
+const openModalForm = async () => {
+  await renderCoursesSelect(null);
   modalForm.classList.remove('hidden');
   overlay.classList.remove('hidden');
 };
-const openModalDelete = function () {
+const openModalDelete = () => {
   modalDelete.classList.remove('hidden');
   overlay.classList.remove('hidden');
 };
 
-const closeModal = function () {
+const closeModal = () => {
   [...modal].map((md) => md.classList.add('hidden'));
   overlay.classList.add('hidden');
 
@@ -71,10 +74,15 @@ formAdd.addEventListener('submit', async (e) => {
   e.preventDefault();
 
   const formInputs = e.target.querySelectorAll('.form-input');
-
   let hasErrro = false;
+
   for (const input of formInputs) {
     if (!input.value.trim()) {
+      if (input.name === 'course' && formInputs[2].value === 'employee') {
+        document.querySelector('.error-course').textContent = '';
+        continue;
+      }
+
       document.querySelector(`.error-${input.name}`).textContent =
         input.name + ' required';
       hasErrro = true;
@@ -85,7 +93,11 @@ formAdd.addEventListener('submit', async (e) => {
     }
   }
 
-  if (hasErrro) return;
+  // Email Validation
+  if (!isEmailAddress(formInputs[1].value)) {
+    document.querySelector('.error-email').textContent = 'Email is invalid';
+    hasErrro = true;
+  }
 
   // Email Duplication Check by (email)
   const existingEmail = employees.some((emp) => {
@@ -94,8 +106,10 @@ formAdd.addEventListener('submit', async (e) => {
 
   if (existingEmail) {
     document.querySelector('.error-email').textContent = 'Email already exists';
-    return;
+    hasErrro = true;
   }
+
+  if (hasErrro) return;
 
   const employeeData = {
     name: formInputs[0].value,
@@ -119,18 +133,21 @@ document.querySelector('.table').addEventListener('click', (e) => {
   const tableRow = e.target.closest('.table__row');
   if (!tableRow) return;
 
-  const courseId = tableRow.dataset.id;
+  const employeeId = tableRow.dataset.id;
+  const employee = employees.find((emp) => emp.id == employeeId);
 
   // Delete button
   if (e.target.classList.contains('btn--delete')) {
-    deletingId = courseId;
+    deletingId = employeeId;
+
+    deleteMessage.querySelector('span').innerText = employee.name;
     openModalDelete();
   }
 
   // Edit button
   if (e.target.classList.contains('btn--edit')) {
-    editingId = courseId;
-    const employee = employees.find((emp) => emp.id == editingId);
+    editingId = employeeId;
+    renderCoursesSelect(employee.courseId);
 
     document.querySelector('.modal-employee-form .modal-title').textContent =
       'Edit Course';
@@ -149,14 +166,32 @@ document.querySelector('.table').addEventListener('click', (e) => {
 
 // Load init courses
 const load = async () => {
-  courses = await getCoursesWithoutInstructors();
   employees = await getEmployees();
+};
 
-  courses.map((crs) => {
+//
+const renderCoursesSelect = async (currentCourseId = null) => {
+  selectCourses.innerHTML = '<option value="">Select Course</option>';
+
+  courses = await getCoursesWithoutInstructors();
+
+  courses.forEach((crs) => {
     const opt = `<option value="${crs.id}">${crs.title}</option>`;
-
     selectCourses.insertAdjacentHTML('beforeend', opt);
   });
+
+  if (currentCourseId) {
+    const isAlreadyInList = courses.some((c) => c.id == currentCourseId);
+
+    if (!isAlreadyInList) {
+      const currentCourse = await getCourse(currentCourseId);
+
+      const opt = `<option value="${currentCourse.id}" selected>${currentCourse.title}</option>`;
+      selectCourses.insertAdjacentHTML('beforeend', opt);
+    } else {
+      selectCourses.value = currentCourseId;
+    }
+  }
 };
 
 load();

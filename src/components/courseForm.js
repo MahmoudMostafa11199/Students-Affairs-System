@@ -13,6 +13,7 @@ const overlay = document.querySelector('.overlay');
 const showModal = document.querySelector('.btn--add');
 const btnCloseModal = document.querySelectorAll('.close-modal');
 const formCancel = document.querySelectorAll('.form-cancel');
+const deleteMessage = document.querySelector('.delete-message');
 const formAdd = document.querySelector('.modal-form');
 const btnConfirmDelete = document.querySelector('.form-delete');
 
@@ -95,7 +96,7 @@ formAdd.addEventListener('submit', async (e) => {
   const existingCourse = courses.some((crs) => {
     return (
       crs.code == formInputs[1].value.toUpperCase().trim() &&
-      editingId !== std.id
+      editingId !== crs.id
     );
   });
 
@@ -126,17 +127,19 @@ document.querySelector('.table').addEventListener('click', (e) => {
   if (!tableRow) return;
 
   const courseId = tableRow.dataset.id;
+  const course = courses.find((crs) => crs.id == courseId);
 
   // Delete button
   if (e.target.classList.contains('btn--delete')) {
     deletingId = courseId;
+
+    deleteMessage.querySelector('span').innerText = course.title;
     openModalDelete();
   }
 
   // Edit button
   if (e.target.classList.contains('btn--edit')) {
     editingId = courseId;
-    const course = courses.find((crs) => crs.id == editingId);
 
     document.querySelector('.modal-course-form .modal-title').textContent =
       'Edit Course';

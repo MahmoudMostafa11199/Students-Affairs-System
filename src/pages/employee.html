@@ -14,22 +14,23 @@
 
   <body>
     <div class="container">
-      <div class="nav-bar">
+      <div class="nav-bar clearfix">
         <a href="../../index.html"> <p class="title">Student Affairs</p> </a>
         <div class="entities">
-          <a href="student.html"> <button>Students</button></a>
-          <a href="course.html"> <button>Courses</button> </a>
-          <a href="employee.html"> <button>Employees</button> </a>
+          <a href="student.html"><button>Students</button></a>
+          <a href="course.html"><button>Courses</button></a>
+          <a href="employee.html"><button>Employees</button></a>
         </div>
       </div>
       <div class="greeting">
         <h1>Welcome To Employee System Page</h1>
       </div>
-      <div class="table-operations">
+      <div class="table-operations clearfix">
         <div class="table-operations__filter">
           <select name="select-input" id="per-page">
             <option value="10">10</option>
             <option value="25">25</option>
+            <option value="all">All</option>
           </select>
           <span>Employees per pages</span>
         </div>
@@ -42,17 +43,39 @@
 
       <table width="100%" class="table">
         <tr class="table__row table__row--head">
-          <th class="table__title">#</th>
-          <th data-title="name" class="table__title name-table">Name</th>
-          <th data-title="email" class="table__title">Email</th>
-          <th data-title="role" class="table__title">Role</th>
-          <th data-title="courseName" class="table__title">Course</th>
-          <th data-title="experience" class="table__title">Experience</th>
-          <th class="table__title">Actions</th>
+          <th class="table__title" width="10">#</th>
+          <th data-title="name" class="table__title" width="200">Name</th>
+          <th data-title="email" class="table__title" width="300">Email</th>
+          <th data-title="role" class="table__title" width="50">Role</th>
+          <th data-title="courseName" class="table__title" width="400">
+            Course
+          </th>
+          <th data-title="experience" class="table__title" width="100">
+            Experience
+          </th>
+          <th class="table__title" width="200">Actions</th>
         </tr>
 
         <tbody class="table__body"></tbody>
       </table>
+
+      <div class="pagination clearfix">
+        <p class="pagination__info">
+          Showing
+          <span class="pagination__from">21</span>
+          to
+          <span class="pagination__to">30</span>
+          of
+          <span class="pagination__total">57</span>
+          entries
+        </p>
+
+        <div class="pagination__controls">
+          <button class="pagination__btn btn btn--prev">Prev</button>
+          <div class="pagination__pages"></div>
+          <button class="pagination__btn btn btn--next">Next</button>
+        </div>
+      </div>
 
       <button class="btn btn--add">Add New Employees</button>
 
@@ -114,7 +137,9 @@
       <div class="modal modal-delete hidden">
         <button class="close-modal">&times;</button>
         <h1 class="modal-title">Delete Employee</h1>
-        <p class="delete-message">Are you sure to delete this Employee ?</p>
+        <p class="delete-message">
+          Are you sure to delete this Employee (<span></span>)?
+        </p>
 
         <div class="clearfix form-control">
           <button class="form-delete">Delete</button>

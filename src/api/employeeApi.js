@@ -1,5 +1,6 @@
+import Employee from '../models/Employee.js';
 import { API_URL } from '../utils/constant.js';
-import { generateId } from '../utils/helper.js';
+import { generateId, throwErrorRes } from '../utils/helper.js';
 import { getCourses } from './courseApi.js';
 
 // Fetch Employees
@@ -8,19 +9,17 @@ export const getEmployees = async () => {
     const employeeRes = await fetch(`${API_URL}/employees`);
 
     if (!employeeRes.ok)
-      throw new Error(
-        'Failed to fetch employees data. Please try again later.',
-      );
+      throwErrorRes('Failed to fetch employees data. Please try again later.');
 
     const employeesData = await employeeRes.json();
 
     const courses = await getCourses();
 
-    const employees = employeesData.map((emp) => {
-      const course = courses.find((crs) => crs.id === emp.courseId);
-
-      return { ...emp, courseName: course.title };
-    });
+    const employees = employeesData.map((emp) => ({
+      ...emp,
+      courseName:
+        courses.find((crs) => crs.id === emp.courseId)?.title || '...',
+    }));
 
     return employees;
 
@@ -33,28 +32,83 @@ export const getEmployees = async () => {
 // Fetch Instructor
 export const getInstructors = async () => {
   try {
-    const employees = await getEmployees();
+    const res = await fetch(`${API_URL}/employees?role=instructor`);
 
-    const instructors = employees.filter(
-      (emp) => emp.role.toLowerCase() === 'instructor',
-    );
+    if (!res.ok) throwErrorRes('Failed to fetch instructors.');
+
+    const instructors = await res.json();
 
     return instructors;
+
     //
   } catch (err) {
     console.error(err.message);
   }
 };
 
-// Create Course
+// Sort employee by (name, email, role, experience)
+export const sortEmployee = async (sortBy, order = 'asc') => {
+  try {
+    const res = await fetch(
+      `${API_URL}/employees?_sort=${sortBy}&_order=${order}`,
+    );
+    if (!res.ok) throwErrorRes('Failed to sort employees data.');
+
+    const sortedEmployees = await res.json();
+
+    const courses = await getCourses();
+
+    const employees = sortedEmployees.map((emp) => ({
+      ...emp,
+      courseName:
+        courses.find((crs) => crs.id === emp.courseId)?.title || '...',
+    }));
+
+    return employees;
+
+    //
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
+// Search employee by (id, name, email, role, courseId, experience)
+export const searchEmployee = async (query) => {
+  try {
+    const res = await fetch(`${API_URL}/employees?q=${query}`);
+    if (!res.ok) throwErrorRes('Failed to sort employees data.');
+
+    const searchedEmployees = await res.json();
+
+    const courses = await getCourses();
+
+    const employees = searchedEmployees.map((emp) => ({
+      ...emp,
+      courseName:
+        courses.find((crs) => crs.id === emp.courseId)?.title || '...',
+    }));
+
+    return employees;
+
+    //
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
+// Create employee
 export const createEmployee = async (data) => {
   try {
     const employeeId = generateId(data.role == 'employee' ? 'emp' : 'ins');
 
-    const newEmployee = {
-      id: employeeId,
-      ...data,
-    };
+    const newEmployee = new Employee(
+      employeeId,
+      data.name,
+      data.email,
+      data.role,
+      data.experience,
+      data.courseId,
+    );
 
     const res = await fetch(`${API_URL}/employees`, {
       method: 'POST',
@@ -62,7 +116,9 @@ export const createEmployee = async (data) => {
       body: JSON.stringify(newEmployee),
     });
 
-    return await res.json();
+    if (!res.ok) throwErrorRes('Failed to create employee.');
+
+    return res.ok;
 
     //
   } catch (err) {
@@ -70,7 +126,7 @@ export const createEmployee = async (data) => {
   }
 };
 
-// Update course
+// Update employee
 export const updateEmployee = async (id, updatedEmployee) => {
   try {
     const res = await fetch(`${API_URL}/employees/${id}`, {
@@ -79,7 +135,9 @@ export const updateEmployee = async (id, updatedEmployee) => {
       body: JSON.stringify(updatedEmployee),
     });
 
-    return await res.json();
+    if (!res.ok) throwErrorRes('Failed to update employee.');
+
+    return res.ok;
 
     //
   } catch (err) {
@@ -94,7 +152,9 @@ export const deleteEmployee = async (id) => {
       method: 'DELETE',
     });
 
-    return await res.json();
+    if (!res.ok) throwErrorRes('Failed to delete employee.');
+
+    return res.ok;
 
     //
   } catch (err) {
@@ -113,7 +173,9 @@ export const deleteEmployeeByCourseId = async (courseId) => {
       method: 'DELETE',
     });
 
-    return await res.json();
+    if (!res.ok) throwErrorRes('Failed to delete employee.');
+
+    return res.ok;
 
     //
   } catch (err) {

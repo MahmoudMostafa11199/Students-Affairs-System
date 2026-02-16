@@ -1,19 +1,44 @@
-import * as api from "../api/employeeApi.js";
-import * as Employee from "../models/Employee.js";
+import * as api from '../api/employeeApi.js';
+import EmployeeView from '../view/EmployeeView.js';
 
-const controlCourses = async function () {
+const controlEmployees = async function () {
   try {
     const data = await api.getEmployees();
 
-    document.querySelector(".table__body").innerHTML = "";
-    Employee.render(data);
-    Employee.sortCourse(data);
-    Employee.search(data);
+    EmployeeView.render(data);
 
     //
   } catch (err) {
-    console.error("Controller Error 💥:", err);
+    console.error('Controller Error 💥:', err);
   }
 };
 
-controlCourses();
+// Control Sort Employees
+const controlSortEmployees = async function (sortBy, order) {
+  try {
+    const sortedEmployees = await api.sortEmployee(sortBy, order);
+
+    return sortedEmployees;
+    //
+  } catch (err) {
+    console.error('Controller Error 💥:', err.message);
+  }
+};
+
+// Control Search Employees
+const controlSearchEmployees = async function (query) {
+  try {
+    const searchedEmployees = await api.searchEmployee(query);
+
+    return searchedEmployees;
+    //
+  } catch (err) {
+    console.error('Controller Error 💥:', err.message);
+  }
+};
+
+(() => {
+  EmployeeView.addHandlerRender(controlEmployees);
+  EmployeeView.sort(controlSortEmployees);
+  EmployeeView.search(controlSearchEmployees);
+})();

@@ -1,18 +1,46 @@
 .greeting h1 {
   text-align: center;
-  padding-top: 35px;
+  margin: 36px 0;
   color: #003566;
 }
 .table {
-  margin: 2rem auto;
   background-color: white;
   border: 1px solid #ddd;
+  margin-bottom: 2rem;
   border-radius: 4px;
   border-collapse: collapse;
   overflow: hidden;
 }
-.table__row--head th {
-  font-size: 1.5rem;
+.table-operations {
+  width: 60%;
+  margin: 0 auto 32px;
+}
+.table-operations__filter {
+  float: left;
+}
+.table-operations__serach {
+  float: right;
+}
+
+#per-page {
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+.table-operations__filter span,
+.table-operations__serach label {
+  color: #1b263b;
+}
+
+.table-operations__serach input {
+  padding: 6px 8px;
+  border-radius: 5px;
+  border: 1px solid #aaa;
+  outline-color: 1px solid #415a77;
+}
+
+.table__row--head .table__title {
+  font-size: 1.4rem;
   background-color: #415a77;
   color: #e0e1dd;
   text-transform: uppercase;
@@ -20,8 +48,9 @@
   letter-spacing: 1px;
   padding: 1.5rem;
 }
-.table__row td {
-  padding: 1.3rem 1.5rem;
+.table__row .table__data {
+  font-size: 1.5rem;
+  padding: 1rem 1.5rem;
   color: #081420;
   border: 1px solid #ddd;
   border-bottom: 1px solid #e0e1dd;
@@ -32,69 +61,46 @@
 }
 .course {
   display: inline-block;
-  margin: 2px;
   font-size: 1.2rem;
+  margin: 2px;
   background-color: #e0e1dd;
   color: #1b263b;
   padding: 2px 8px;
   border-radius: 4px;
 }
-.table__actions {
-  padding: 6px 16px;
-}
-.btn {
-  border: 0;
-  color: #fff;
-  border-radius: 5px;
-  padding: 5px 8px;
-  margin: 8px 0;
+
+.table__actions .btn:not(:last-child) {
+  margin-bottom: 8px;
   margin-right: 8px;
 }
 .btn--add {
+  font-size: 1.8rem;
+  padding: 8px 18px;
   background-color: #2b9929;
+  margin-bottom: 3rem;
+}
+.btn--add:hover {
+  background-color: #0e8f0b;
 }
 .btn--edit {
   background-color: #219ebc;
 }
+.btn--edit:hover {
+  background-color: #0b89a9;
+}
 .btn--delete {
   background-color: #f11;
 }
-.table-operations {
-  width: 97%;
-  margin-top: 20px;
-}
-.table-operations__filter {
-  float: left;
-  margin-left: 30px;
-  margin-bottom: 20px;
-}
-.table-operations__serach {
-  float: right;
+.btn--delete:hover {
+  background-color: #d60e0e;
 }
 
-#per-page {
-  height: 30px;
-  border-radius: 10px;
-}
-.table-operations__filter span,
-.table-operations__serach label {
-  font-family: sans-serif;
-  font-weight: 600;
-  color: #1b263b;
-  padding: 5px 10px;
-}
-
-.table-operations__serach input {
-  padding: 4px 2px;
-  border-radius: 5px;
-  border: none;
-  outline-color: #415a77;
-}
 .hidden {
   display: none;
 }
+
 .modal {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -105,6 +111,9 @@
   box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
   z-index: 10;
 }
+.modal-student-form {
+  width: 70%;
+}
 .modal-delete {
   width: 50rem;
 }
@@ -112,11 +121,11 @@
   margin-bottom: 1.4rem;
 }
 .overlay {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 125%;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(3px);
   z-index: 5;
@@ -131,32 +140,33 @@
   border: none;
   background: none;
 }
+.modal-form {
+  margin-top: 3.6rem;
+}
 .input-box {
   margin-bottom: 2rem;
 }
 .input-box .error {
   display: inline-block;
   color: #f11;
+  text-wrap: wrap;
 }
 .input-box label {
   display: inline-block;
   width: 12rem;
-  font-size: 2rem;
+  font-size: 1.6rem;
 }
 .input-box .form-input,
 .input-box select {
   width: 50%;
+  font-size: 1.6rem;
   padding: 6px 12px;
   border: 1px solid #333;
   outline: 0;
   border-radius: 4px;
-  margin-right: 2rem;
+  margin-right: 1rem;
 }
-.clearfix::after {
-  content: '';
-  display: block;
-  clear: both;
-}
+
 .form-controls {
   margin-top: 4rem;
 }
@@ -165,12 +175,13 @@
 .form-create {
   float: right;
   font-size: 1.6rem;
-  padding: 8px 14px;
-  margin-right: 1rem;
+  padding: 8px 18px;
+  letter-spacing: 0.9px;
   border: 1px solid #777;
   border-radius: 4px;
 }
 .form-cancel {
+  margin-right: 2rem;
   background-color: #eee;
 }
 .form-create {
@@ -189,31 +200,43 @@
 }
 
 .delete-message {
-  font-size: 1.9rem;
+  font-size: 1.8rem;
   margin-left: 1rem;
   margin-bottom: 4rem;
 }
 
-/* .btn-add-course {
-  font-size: 1.8rem;
-  background-color: #219ebc;
-  color: white;
-  border: none;
-  padding: 0rem 0.6rem;
-  border-radius: 50%;
-  
-  transition: all 0.3s;
+.checkbox-group {
+  display: inline-block;
+  width: 50%;
+  max-height: 15rem;
+  padding: 1.4rem 1.8rem;
+  vertical-align: middle;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow-y: auto;
 }
 
-.btn-add-course:hover {
-  background-color: #126782;
+.checkbox-item {
+  margin-bottom: 1rem;
 }
 
-.btn-remove-course {
-  background-color: #ae2012;
-  color: white;
-  border: none;
-  padding: 0rem 0.6rem;
-  border-radius: 5px;
-  font-weight: bold;
-} */
+.checkbox-item:last-child {
+  margin: 0;
+}
+
+.checkbox-item label {
+  display: inline;
+}
+
+.checkbox-item input {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #fca311;
+}
+
+/*  */
+.no-data-found {
+  text-align: center;
+  padding: 2rem 1.8rem;
+}

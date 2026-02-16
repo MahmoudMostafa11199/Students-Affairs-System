@@ -1,6 +1,8 @@
+import Course from '../models/Course.js';
 import { API_URL } from '../utils/constant.js';
-import { generateId } from '../utils/helper.js';
+import { generateId, throwErrorRes } from '../utils/helper.js';
 import { getInstructors } from './employeeApi.js';
+import { getStudents, updateStudent } from './studentApi.js';
 
 // Fetch Courses
 export const getCourses = async () => {
@@ -8,7 +10,7 @@ export const getCourses = async () => {
     const courseRes = await fetch(`${API_URL}/courses`);
 
     if (!courseRes.ok)
-      throw new Error('Failed to fetch courses data. Please try again later.');
+      throwErrorRes('Failed to fetch courses data. Please try again later.');
 
     const coursesData = await courseRes.json();
 
@@ -25,7 +27,7 @@ export const getCourse = async (id) => {
     const courseRes = await fetch(`${API_URL}/courses/${id}`);
 
     if (!courseRes.ok)
-      throw new Error('Failed to fetch course data. Please try again later.');
+      throwErrorRes('Failed to fetch course data. Please try again later.');
 
     const course = await courseRes.json();
 
@@ -40,19 +42,17 @@ export const getCourse = async (id) => {
 // Fetch Courses with Instructor name
 export const getCoursesWithInstructor = async () => {
   try {
-    const courses = await getCourses();
-    const instructors = await getInstructors();
+    const [courses, instructors] = await Promise.all([
+      getCourses(),
+      getInstructors(),
+    ]);
 
-    const coursesWithInstructor = courses.map((crs) => {
-      const instructor = instructors.find((inst) => {
-        return crs.id === inst.courseId;
-      });
-
-      return {
-        ...crs,
-        instructorName: instructor ? instructor.name : 'Waiting for Instructor',
-      };
-    });
+    const coursesWithInstructor = courses.map((crs) => ({
+      ...crs,
+      instructorName:
+        instructors.find((ins) => ins.courseId === crs.id)?.name ||
+        'Waiting for Instructor',
+    }));
 
     return coursesWithInstructor;
 
@@ -62,11 +62,13 @@ export const getCoursesWithInstructor = async () => {
   }
 };
 
-// Fetch Courses without Instructor name
+// Fetch Courses not available Instructor name
 export const getCoursesWithoutInstructors = async () => {
   try {
-    const courses = await getCourses();
-    const instructors = await getInstructors();
+    const [courses, instructors] = await Promise.all([
+      getCourses(),
+      getInstructors(),
+    ]);
 
     const availableCourses = courses.filter((crs) => {
       const isAssigned = instructors.some((inst) => crs.id === inst.courseId);
@@ -82,18 +84,52 @@ export const getCoursesWithoutInstructors = async () => {
   }
 };
 
+// Sort Course by (title, code, creditHours, description)
+export const sortCourse = async (sortBy, order = 'asc') => {
+  try {
+    const res = await fetch(
+      `${API_URL}/courses?_sort=${sortBy}&_order=${order}`,
+    );
+    if (!res.ok) throwErrorRes('Failed to sort courses data. ');
+
+    const sortedCourses = await res.json();
+
+    return sortedCourses;
+
+    //
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
+// Search Course by (title, code, creditHours, description)
+export const searchCourses = async (query) => {
+  try {
+    const res = await fetch(`${API_URL}/courses?q=${query}`);
+    if (!res.ok) throwErrorRes('Failed to sort courses data.');
+
+    const searchedStudent = await res.json();
+
+    return searchedStudent;
+
+    //
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
 // Create Course
 export const createCourse = async (data) => {
   try {
     const courseId = generateId('crs');
 
-    const newCourse = {
-      id: courseId,
-      title: data.title,
-      code: data.code.toUpperCase(),
-      creditHours: Number(data.creditHours),
-      description: data.description,
-    };
+    const newCourse = new Course(
+      courseId,
+      data.title,
+      data.code.toUpperCase(),
+      Number(data.creditHours),
+      data.description,
+    );
 
     const res = await fetch(`${API_URL}/courses`, {
       method: 'POST',
@@ -101,7 +137,9 @@ export const createCourse = async (data) => {
       body: JSON.stringify(newCourse),
     });
 
-    return await res.json();
+    if (!res.ok) throwErrorRes('Failed to create course');
+
+    return res.ok;
 
     //
   } catch (err) {
@@ -118,7 +156,9 @@ export const updateCourse = async (id, updatedCourse) => {
       body: JSON.stringify(updatedCourse),
     });
 
-    return await res.json();
+    if (!res.ok) throwErrorRes('Failed to update course');
+
+    return res.ok;
 
     //
   } catch (err) {
@@ -129,11 +169,28 @@ export const updateCourse = async (id, updatedCourse) => {
 // Delete course
 export const deleteCourse = async (id) => {
   try {
-    const res = await fetch(`${API_URL}/courses/${id}`, { method: 'DELETE' });
+    const res = await fetch(`${API_URL}/courses/${id}`, {
+      method: 'DELETE',
+    });
 
-    if (res.ok) await deleteEmployeeByCourseId(id);
+    if (!res.ok) throwErrorRes('Failed to delete course');
 
-    return await res.json();
+    // delte courseId from student courses
+    const students = await getStudents();
+
+    const updatedPromises = students
+      .filter((std) => std.courses.includes(id))
+      .map((std) => {
+        const updatedCourses = std.courses.filter((crs) => crs !== id);
+        return updateStudent(std.id, { courses: updatedCourses });
+      });
+
+    if (res.ok) {
+      await Promise.all(updatedPromises);
+      await deleteEmployeeByCourseId(id);
+    }
+
+    return res.ok;
 
     //
   } catch (err) {

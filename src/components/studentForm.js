@@ -5,6 +5,7 @@ import {
   getStudents,
   updateStudent,
 } from '../api/studentApi.js';
+import { isEmailAddress } from '../utils/helper.js';
 
 // Elements
 const modal = document.querySelectorAll('.modal');
@@ -14,9 +15,10 @@ const overlay = document.querySelector('.overlay');
 const showModal = document.querySelector('.btn--add');
 const btnCloseModal = document.querySelectorAll('.close-modal');
 const formCancel = document.querySelectorAll('.form-cancel');
-const selectCourses = document.querySelector('.std-courses');
 const formAdd = document.querySelector('.modal-form');
+const deleteMessage = document.querySelector('.delete-message');
 const btnConfirmDelete = document.querySelector('.form-delete');
+const checkboxContainer = document.querySelector('#checkbox-container');
 
 //-----------------------
 // State
@@ -85,7 +87,15 @@ formAdd.addEventListener('submit', async (e) => {
     }
   }
 
-  if (hasErrro) return;
+  const selectedCourses = Array.from(
+    document.querySelectorAll('input[name="courses"]:checked'),
+  ).map((cb) => cb.value);
+
+  if (selectedCourses.length === 0) {
+    document.querySelector('.error-courses').textContent =
+      'Please select at least one course';
+    hasErrro = true;
+  }
 
   // Age Validation
   if (
@@ -94,13 +104,19 @@ formAdd.addEventListener('submit', async (e) => {
     formInputs[1].value > 70
   ) {
     document.querySelector('.error-age').textContent = 'Age is invalid';
-    return;
+    hasErrro = true;
   }
 
   // Level Validation
-  if (isNaN(Number(formInputs[4].value))) {
+  if (isNaN(Number(formInputs[3].value))) {
     document.querySelector('.error-level').textContent = 'Level is invalid';
-    return;
+    hasErrro = true;
+  }
+
+  // Email Validation
+  if (!isEmailAddress(formInputs[2].value)) {
+    document.querySelector('.error-email').textContent = 'Email is invalid';
+    hasErrro = true;
   }
 
   // Email Duplication Check
@@ -110,15 +126,17 @@ formAdd.addEventListener('submit', async (e) => {
 
   if (existingEmail) {
     document.querySelector('.error-email').textContent = 'Email already exists';
-    return;
+    hasErrro = true;
   }
+
+  if (hasErrro) return;
 
   const studentData = {
     name: formInputs[0].value,
     age: +formInputs[1].value,
     email: formInputs[2].value,
-    courses: [formInputs[3].value],
-    level: +formInputs[4].value,
+    courses: selectedCourses,
+    level: +formInputs[3].value,
   };
 
   if (editingId) {
@@ -136,32 +154,38 @@ document.querySelector('.table').addEventListener('click', (e) => {
   if (!tableRow) return;
 
   const studentId = tableRow.dataset.id;
+  const student = students.find((std) => std.id == studentId);
 
   // Delete button
   if (e.target.classList.contains('btn--delete')) {
     deletingId = studentId;
+
+    deleteMessage.querySelector('span').innerText = student.name;
     openModalDelete();
   }
 
   // Edit button
   if (e.target.classList.contains('btn--edit')) {
     editingId = studentId;
-    const student = students.find((std) => std.id == editingId);
+
+    document
+      .querySelectorAll('input[name="courses"]')
+      .forEach((cb) => (cb.checked = false));
+
+    student.courses.forEach((courseId) => {
+      const checkbox = document.querySelector(`input[value="${courseId}"]`);
+      if (checkbox) checkbox.checked = true;
+    });
 
     document.querySelector('.modal-student-form .modal-title').textContent =
       'Edit Student';
     document.querySelector('.form-create').textContent = 'Save Changes';
 
-    const courseIds = courses.filter((crs) =>
-      student.courses.includes(crs.title),
-    );
-
     const formInputs = formAdd.querySelectorAll('.form-input');
     formInputs[0].value = student.name;
     formInputs[1].value = student.age;
     formInputs[2].value = student.email;
-    formInputs[3].value = courseIds[0].id;
-    formInputs[4].value = student.level;
+    formInputs[3].value = student.level;
 
     openModalForm();
   }
@@ -172,11 +196,16 @@ const load = async () => {
   courses = await getCourses();
   students = await getStudents();
 
-  courses.map((crs) => {
-    const opt = `<option value="${crs.id}">${crs.title}</option>`;
-
-    selectCourses.insertAdjacentHTML('beforeend', opt);
-  });
+  checkboxContainer.innerHTML = courses
+    .map(
+      (crs) => `
+    <div class="checkbox-item">
+      <input type="checkbox" name="courses" value="${crs.id}" id="crs-${crs.id}">
+      <label for="crs-${crs.id}">${crs.title}</label>
+    </div>
+  `,
+    )
+    .join('');
 };
 
 load();
