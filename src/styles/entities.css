@@ -235,6 +235,10 @@
   accent-color: #fca311;
 }
 
+#course-description {
+  vertical-align: middle;
+}
+
 /*  */
 .no-data-found {
   text-align: center;

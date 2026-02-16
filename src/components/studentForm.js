@@ -1,211 +1,131 @@
-import { getCourses } from '../api/courseApi.js';
-import {
-  createStudent,
-  deleteStudent,
-  getStudents,
-  updateStudent,
-} from '../api/studentApi.js';
+import * as courseApi from '../api/courseApi.js';
+import * as studentApi from '../api/studentApi.js';
 import { isEmailAddress } from '../utils/helper.js';
+import BaseForm from './BaseForm.js';
 
-// Elements
-const modal = document.querySelectorAll('.modal');
-const modalForm = document.querySelector('.modal-student-form');
-const modalDelete = document.querySelector('.modal-delete');
-const overlay = document.querySelector('.overlay');
-const showModal = document.querySelector('.btn--add');
-const btnCloseModal = document.querySelectorAll('.close-modal');
-const formCancel = document.querySelectorAll('.form-cancel');
-const formAdd = document.querySelector('.modal-form');
-const deleteMessage = document.querySelector('.delete-message');
-const btnConfirmDelete = document.querySelector('.form-delete');
-const checkboxContainer = document.querySelector('#checkbox-container');
-
-//-----------------------
-// State
-let editingId = null;
-let deletingId = null;
-let students;
-let courses;
-
-//-----------------------
-// Functions
-// Open and Close modal
-const openModalForm = function () {
-  modalForm.classList.remove('hidden');
-  overlay.classList.remove('hidden');
-};
-const openModalDelete = function () {
-  modalDelete.classList.remove('hidden');
-  overlay.classList.remove('hidden');
-};
-
-const closeModal = function () {
-  [...modal].map((md) => md.classList.add('hidden'));
-  overlay.classList.add('hidden');
-
-  editingId = null;
-  deletingId = null;
-  formAdd.reset();
-  document.querySelector('.modal-student-form .modal-title').textContent =
-    'Add Student';
-  document.querySelector('.form-create').textContent = 'Create';
-  document.querySelectorAll('.error').forEach((el) => (el.textContent = ''));
-};
-
-// Event Listeners for Modals
-showModal.addEventListener('click', openModalForm);
-[...btnCloseModal].map((btn) => {
-  btn.addEventListener('click', closeModal);
-});
-[...formCancel].map((btn) => btn.addEventListener('click', closeModal));
-overlay.addEventListener('click', closeModal);
-
-// Confirm delete
-btnConfirmDelete.addEventListener('click', async () => {
-  if (deletingId) {
-    await deleteStudent(deletingId);
-    closeModal();
-  }
-});
-
-// Submit (Add / Edit)
-formAdd.addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  const formInputs = e.target.querySelectorAll('.form-input');
-
-  let hasErrro = false;
-  for (const input of formInputs) {
-    if (!input.value.trim()) {
-      document.querySelector('.error-' + input.name).textContent =
-        input.name + ' required';
-      hasErrro = true;
-
-      //
-    } else {
-      document.querySelector('.error-' + input.name).textContent = '';
-    }
-  }
-
-  const selectedCourses = Array.from(
-    document.querySelectorAll('input[name="courses"]:checked'),
-  ).map((cb) => cb.value);
-
-  if (selectedCourses.length === 0) {
-    document.querySelector('.error-courses').textContent =
-      'Please select at least one course';
-    hasErrro = true;
-  }
-
-  // Age Validation
-  if (
-    isNaN(Number(formInputs[1].value)) ||
-    formInputs[1].value < 7 ||
-    formInputs[1].value > 70
-  ) {
-    document.querySelector('.error-age').textContent = 'Age is invalid';
-    hasErrro = true;
-  }
-
-  // Level Validation
-  if (isNaN(Number(formInputs[3].value))) {
-    document.querySelector('.error-level').textContent = 'Level is invalid';
-    hasErrro = true;
-  }
-
-  // Email Validation
-  if (!isEmailAddress(formInputs[2].value)) {
-    document.querySelector('.error-email').textContent = 'Email is invalid';
-    hasErrro = true;
-  }
-
-  // Email Duplication Check
-  const existingEmail = students.some((std) => {
-    return std.email == formInputs[2].value.trim() && editingId !== std.id;
-  });
-
-  if (existingEmail) {
-    document.querySelector('.error-email').textContent = 'Email already exists';
-    hasErrro = true;
-  }
-
-  if (hasErrro) return;
-
-  const studentData = {
-    name: formInputs[0].value,
-    age: +formInputs[1].value,
-    email: formInputs[2].value,
-    courses: selectedCourses,
-    level: +formInputs[3].value,
-  };
-
-  if (editingId) {
-    await updateStudent(editingId, studentData);
-
-    //
-  } else {
-    await createStudent(studentData);
-  }
-  closeModal();
-});
-
-document.querySelector('.table').addEventListener('click', (e) => {
-  const tableRow = e.target.closest('.table__row');
-  if (!tableRow) return;
-
-  const studentId = tableRow.dataset.id;
-  const student = students.find((std) => std.id == studentId);
-
-  // Delete button
-  if (e.target.classList.contains('btn--delete')) {
-    deletingId = studentId;
-
-    deleteMessage.querySelector('span').innerText = student.name;
-    openModalDelete();
-  }
-
-  // Edit button
-  if (e.target.classList.contains('btn--edit')) {
-    editingId = studentId;
-
-    document
-      .querySelectorAll('input[name="courses"]')
-      .forEach((cb) => (cb.checked = false));
-
-    student.courses.forEach((courseId) => {
-      const checkbox = document.querySelector(`input[value="${courseId}"]`);
-      if (checkbox) checkbox.checked = true;
+export default class StudentForm extends BaseForm {
+  constructor() {
+    super('Student', '.modal-student-form', {
+      delete: studentApi.deleteStudent,
+      update: studentApi.updateStudent,
+      create: studentApi.createStudent,
+      get: studentApi.getStudents,
     });
 
-    document.querySelector('.modal-student-form .modal-title').textContent =
-      'Edit Student';
-    document.querySelector('.form-create').textContent = 'Save Changes';
+    this.checkboxContainer = document.querySelector('#checkbox-container');
 
-    const formInputs = formAdd.querySelectorAll('.form-input');
-    formInputs[0].value = student.name;
-    formInputs[1].value = student.age;
-    formInputs[2].value = student.email;
-    formInputs[3].value = student.level;
-
-    openModalForm();
+    this.load();
   }
-});
 
-// Load init courses
-const load = async () => {
-  courses = await getCourses();
-  students = await getStudents();
+  async load() {
+    const [courses, students] = await Promise.all([
+      courseApi.getCourses(),
+      this.api.get(),
+    ]);
 
-  checkboxContainer.innerHTML = courses
-    .map(
-      (crs) => `
-    <div class="checkbox-item">
-      <input type="checkbox" name="courses" value="${crs.id}" id="crs-${crs.id}">
-      <label for="crs-${crs.id}">${crs.title}</label>
-    </div>
-  `,
-    )
-    .join('');
-};
+    this.items = students;
+    this.allCourses = courses;
 
-load();
+    this.checkboxContainer.innerHTML = this.allCourses
+      .map(
+        (crs) => `
+          <div class="checkbox-item">
+            <input type="checkbox" name="courses" value="${crs.id}" id="crs-${crs.id}">
+            <label for="crs-${crs.id}">${crs.title}</label>
+          </div>
+        `,
+      )
+      .join('');
+  }
+
+  prepareData(inputs) {
+    const selectedCourses = Array.from(
+      document.querySelectorAll('input[name="courses"]:checked'),
+    ).map((cb) => cb.value);
+
+    return {
+      name: inputs[0].value,
+      age: +inputs[1].value,
+      email: inputs[2].value,
+      courses: selectedCourses,
+      level: +inputs[3].value,
+    };
+  }
+
+  fillForm(student) {
+    const inputs = this.modal.formEl.querySelectorAll('.form-input');
+    inputs[0].value = student.name;
+    inputs[1].value = student.age;
+    inputs[2].value = student.email;
+    inputs[3].value = student.level;
+
+    document.querySelectorAll('input[name="courses"]').forEach((cb) => {
+      cb.checked = student.courses.includes(cb.value);
+    });
+  }
+
+  validate(inputs) {
+    let hasErrro = false;
+
+    // Check empty inputs
+    inputs.forEach((input) => {
+      const errorEl = document.querySelector(`.error-${input.name}`);
+      if (!input.value.trim()) {
+        errorEl.textContent = input.name + ' required';
+        hasErrro = true;
+      } else {
+        errorEl.textContent = '';
+      }
+    });
+
+    // Check courses
+    const selectedCourses = Array.from(
+      document.querySelectorAll('input[name="courses"]:checked'),
+    ).map((cb) => cb.value);
+
+    if (selectedCourses.length === 0) {
+      document.querySelector('.error-courses').textContent =
+        'Please select at least one course';
+      hasErrro = true;
+    } else {
+      document.querySelector('.error-courses').textContent = '';
+    }
+
+    // Age Validation
+    if (
+      isNaN(Number(inputs[1].value)) ||
+      inputs[1].value < 7 ||
+      inputs[1].value > 70
+    ) {
+      document.querySelector('.error-age').textContent = 'Age is invalid';
+      hasErrro = true;
+    }
+
+    // Level Validation
+    if (isNaN(Number(inputs[3].value))) {
+      document.querySelector('.error-level').textContent = 'Level is invalid';
+      hasErrro = true;
+    }
+
+    // Email Validation
+    if (!isEmailAddress(inputs[2].value)) {
+      document.querySelector('.error-email').textContent = 'Email is invalid';
+      hasErrro = true;
+    }
+
+    // Email Duplication Check
+    const existingEmail = this.items.some((std) => {
+      return std.email == inputs[2].value.trim() && this.editingId !== std.id;
+    });
+
+    if (existingEmail) {
+      document.querySelector('.error-email').textContent =
+        'Email already exists';
+      hasErrro = true;
+    }
+
+    return !hasErrro;
+  }
+}
+
+new StudentForm();
