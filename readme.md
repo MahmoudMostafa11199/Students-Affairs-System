@@ -22,8 +22,10 @@ Students-Affairs-System/
 │   │   ├── employeeApi.js
 │   │   └── studentApi.js
 │   ├── components/
+│   │   ├── BaseForm.js
 │   │   ├── courseForm.js
 │   │   ├── employeeForm.js
+│   │   ├── modal.js
 │   │   └── studentForm.js
 │   ├── controllers/
 │   │   ├── courseController.js
