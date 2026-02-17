@@ -58,12 +58,26 @@ Students-Affairs-System/
 
 ```
 
-## Quick start
+## How to Run
 
-1. Serve the mock API using `json-server`:
+1. **Clone the repository:**
 
-```bash
-npx json-server --watch src/data/db.json
-```
+   ```bash
+   git clone https://github.com/MahmoudMostafa11199/Students-Affairs-System.git
+   ```
 
-2. Open a page in the browser, for example `src/pages/student.html` (use a static server or Live Server extension so ES modules load correctly).
+2. **Install Dependencies:**
+
+   ```bash
+   npm install json-server
+   ```
+
+3. **Start the API Server:**
+
+   ```bash
+   npx json-server --watch db.json
+   ```
+
+4. **Launch the App:**
+
+   Open index.html in your browser (Live Server recommended so ES modules load correctly).
